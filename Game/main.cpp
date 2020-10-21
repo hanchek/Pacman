@@ -1,11 +1,14 @@
 #include <SFML/Graphics.hpp>
+#include "ResourceManager/ResourceManager.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!", sf::Style::Fullscreen);
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+
+    ResourceManager::PreloadTexturesFromFolder("Data/Textures");
+
+    sf::Sprite testSprite;
+    testSprite.setTexture(ResourceManager::GetTexture("testTexture"));
 
     while (window.isOpen())
     {
@@ -17,9 +20,11 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(testSprite);
         window.display();
     }
+
+    ResourceManager::ReleaseResources();
 
     return 0;
 }

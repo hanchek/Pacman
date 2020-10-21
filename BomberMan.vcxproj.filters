@@ -2,5 +2,20 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
+    <ClCompile Include="Game\ResourceManager\ResourceManager.cpp">
+      <Filter>ResourceManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ResourceManager">
+      <UniqueIdentifier>{aadebea2-4a19-4cf9-9ddc-293709636bbc}</UniqueIdentifier>
+      <Extensions>
+      </Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game\ResourceManager\ResourceManager.h">
+      <Filter>ResourceManager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
