@@ -5,6 +5,7 @@
     <ClCompile Include="Game\ResourceManager\ResourceManager.cpp">
       <Filter>ResourceManager</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ResourceManager">
@@ -17,5 +18,6 @@
     <ClInclude Include="Game\ResourceManager\ResourceManager.h">
       <Filter>ResourceManager</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Game.h" />
   </ItemGroup>
 </Project>
