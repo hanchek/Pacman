@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\ResourceManager\ResourceManager.h" />
+    <ClInclude Include="Game\Utils\Constants.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
