@@ -1,6 +1,5 @@
 #include "ResourceManager.h"
 #include <filesystem>
-#include <iostream>
 #include <cassert>
 
 std::unordered_map<size_t, std::unique_ptr<sf::Texture>> ResourceManager::s_Textures;
@@ -48,7 +47,6 @@ void ResourceManager::PreloadTexturesFromFolder(const std::string& relativePath)
                 const size_t offset1 = entryString.find_last_of("/\\");
                 const size_t offset2 = entryString.find_last_of('.');
                 const std::string fileName = entryString.substr(offset1 + 1, offset2 - offset1 - 1);
-                std::cout << fileName << std::endl;
 
                 const size_t nameHash = std::hash<std::string>{}(fileName);
                 s_Textures.insert(std::make_pair(nameHash, std::move(texture)));
