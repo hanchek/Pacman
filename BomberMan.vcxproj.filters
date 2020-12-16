@@ -6,6 +6,15 @@
       <Filter>ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Allocators\LinearAllocator.cpp">
+      <Filter>Allocators</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Allocators\PoolAllocator.cpp">
+      <Filter>Allocators</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Allocators\FreeListAllocator.cpp">
+      <Filter>Allocators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ResourceManager">
@@ -16,6 +25,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{cd009f62-d4ce-4ef5-b32e-d75008b98cda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EntityComponentSystem">
+      <UniqueIdentifier>{6f07963b-be38-4b9a-8a42-f794a7e97c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Allocators">
+      <UniqueIdentifier>{b4615255-bfd0-4f9f-9f3f-3037b1cdc0fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\ResourceManager\ResourceManager.h">
@@ -24,6 +39,24 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Utils\Constants.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\EntityComponentSystem\EntityManager.h">
+      <Filter>EntityComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\EntityComponentSystem\ObjectPool.h">
+      <Filter>EntityComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Allocators\IAllocator.h">
+      <Filter>Allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Allocators\LinearAllocator.h">
+      <Filter>Allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Allocators\PoolAllocator.h">
+      <Filter>Allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Allocators\FreeListAllocator.h">
+      <Filter>Allocators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

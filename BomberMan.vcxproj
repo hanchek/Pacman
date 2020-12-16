@@ -19,11 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Allocators\FreeListAllocator.cpp" />
+    <ClCompile Include="Game\Allocators\LinearAllocator.cpp" />
+    <ClCompile Include="Game\Allocators\PoolAllocator.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Game\ResourceManager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Allocators\FreeListAllocator.h" />
+    <ClInclude Include="Game\Allocators\IAllocator.h" />
+    <ClInclude Include="Game\Allocators\LinearAllocator.h" />
+    <ClInclude Include="Game\Allocators\PoolAllocator.h" />
+    <ClInclude Include="Game\EntityComponentSystem\EntityManager.h" />
+    <ClInclude Include="Game\EntityComponentSystem\ObjectPool.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Game\Utils\Constants.h" />

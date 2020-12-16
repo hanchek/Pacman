@@ -6,14 +6,12 @@
 #include "ResourceManager/ResourceManager.h"
 #include "Utils/Constants.h"
 
-
-
 void Game::Run()
 {
     GameInit();
 
     sf::Clock clock;
-    sf::Time dt; 
+    sf::Time dt;
     while (m_Window.isOpen())
     {
         dt = clock.restart();
