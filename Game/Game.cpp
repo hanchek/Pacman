@@ -5,6 +5,7 @@
 
 #include "ResourceManager/ResourceManager.h"
 #include "Utils/Constants.h"
+#include "EntityComponentSystem/ComponentManager.h"
 
 void Game::Run()
 {
@@ -24,6 +25,8 @@ void Game::Run()
 
 void Game::GameInit()
 {
+    ComponentManager::CreateInstance();
+
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
     ResourceManager::PreloadTexturesFromFolder(TEXTURES_FOLDER_PATH);
@@ -85,6 +88,8 @@ void Game::Render()
 
 void Game::GameRelease()
 {
+    ComponentManager::DestroyInstance();    
+
     ResourceManager::ReleaseResources();
 }
 
