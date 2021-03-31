@@ -18,6 +18,12 @@
     <ClCompile Include="Game\EntityComponentSystem\ComponentManager.cpp">
       <Filter>EntityComponentSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Components\RenderComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Render\RenderManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ResourceManager">
@@ -33,6 +39,12 @@
     </Filter>
     <Filter Include="Allocators">
       <UniqueIdentifier>{b4615255-bfd0-4f9f-9f3f-3037b1cdc0fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{75b88134-e63d-4d39-8c69-3041545ead40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{a0599f87-aae7-4f2f-b780-408f7036bfda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +76,12 @@
     <ClInclude Include="Game\Singleton.h" />
     <ClInclude Include="Game\EntityComponentSystem\ComponentManager.h">
       <Filter>EntityComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Components\RenderComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Render\RenderManager.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

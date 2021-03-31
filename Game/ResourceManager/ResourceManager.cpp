@@ -2,8 +2,6 @@
 #include <filesystem>
 #include <cassert>
 
-std::unordered_map<size_t, std::unique_ptr<sf::Texture>> ResourceManager::s_Textures;
-
 const sf::Texture& ResourceManager::GetTexture(const std::string& name)
 {
     const std::size_t nameHash = std::hash<std::string>{}(name);
@@ -57,9 +55,4 @@ void ResourceManager::PreloadTexturesFromFolder(const std::string& relativePath)
             }
         }
     }
-}
-
-void ResourceManager::ReleaseResources()
-{
-    s_Textures.clear();
 }

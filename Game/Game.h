@@ -24,5 +24,4 @@ private:
 
     GameConfig m_GameConfig;
     sf::RenderWindow m_Window;
-    sf::Sprite m_TestSprite;
 };

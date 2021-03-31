@@ -3,15 +3,20 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <memory>
 
+#include "Game/Singleton.h"
 
-class ResourceManager
+
+class ResourceManager : public Singleton<ResourceManager>
 {
 public:
-    typedef std::unique_ptr<sf::Texture> TexturePtr;
-    static const sf::Texture& GetTexture(const std::string& name);
-    static void PreloadTexturesFromFolder(const std::string& relativePath);
+    friend Singleton<ResourceManager>;
 
-    static void ReleaseResources();
+    typedef std::unique_ptr<sf::Texture> TexturePtr;
+
+    const sf::Texture& GetTexture(const std::string& name);
+    void PreloadTexturesFromFolder(const std::string& relativePath);
 private:
-    static std::unordered_map<size_t, TexturePtr> s_Textures;
+    ResourceManager() = default;
+    ~ResourceManager() = default;
+    std::unordered_map<size_t, TexturePtr> s_Textures;
 };

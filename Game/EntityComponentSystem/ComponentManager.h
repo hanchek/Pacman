@@ -16,7 +16,7 @@ class Component;
 class ComponentManager:public Singleton<ComponentManager>
 {
 public:
-    friend class Singleton<ComponentManager>;
+    friend Singleton<ComponentManager>;
 
     template<class T, class... Args>
     T* CreateComponent(Args&&... args)

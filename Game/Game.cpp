@@ -3,13 +3,23 @@
 #include <cassert>
 #include <Windows.h>
 
+#include "Components/RenderComponent.h"
+#include "EntityComponentSystem/ComponentManager.h"
+#include "Render/RenderManager.h"
 #include "ResourceManager/ResourceManager.h"
 #include "Utils/Constants.h"
-#include "EntityComponentSystem/ComponentManager.h"
 
 void Game::Run()
 {
     GameInit();
+
+    RenderComponent* createdComponent = nullptr;
+
+    if (ComponentManager* componentManager = ComponentManager::GetInstance())
+    {
+        createdComponent = componentManager->CreateComponent<RenderComponent>("bomb_high_res");
+        createdComponent->SetSize({ 64.f, 64.f });
+    }
 
     sf::Clock clock;
     sf::Time dt;
@@ -20,16 +30,26 @@ void Game::Run()
         Render();
     }
 
+    if (ComponentManager* componentManager = ComponentManager::GetInstance())
+    {
+        componentManager->DestroyComponent(createdComponent);
+    }
+
     GameRelease();
 }
 
 void Game::GameInit()
 {
+    ResourceManager::CreateInstance();
+    RenderManager::CreateInstance();
     ComponentManager::CreateInstance();
 
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
-    ResourceManager::PreloadTexturesFromFolder(TEXTURES_FOLDER_PATH);
+    if (ResourceManager* resourceManager = ResourceManager::GetInstance())
+    {
+        resourceManager->PreloadTexturesFromFolder(TEXTURES_FOLDER_PATH);
+    }
 
     if (m_GameConfig.isFullscreen)
     {
@@ -48,8 +68,6 @@ void Game::GameInit()
     {
         m_Window.create(m_GameConfig.windowedMode, WINDOW_NAME, sf::Style::Default);
     }
-
-    m_TestSprite.setTexture(ResourceManager::GetTexture("testTexture"));
 }
 
 void Game::Update(float dt)
@@ -81,16 +99,19 @@ void Game::Render()
 {
     m_Window.clear();
 
-    m_Window.draw(m_TestSprite);
+    if (RenderManager* renderManager = RenderManager::GetInstance())
+    {
+        renderManager->Render(m_Window);
+    }
 
     m_Window.display();
 }
 
 void Game::GameRelease()
 {
-    ComponentManager::DestroyInstance();    
-
-    ResourceManager::ReleaseResources();
+    ComponentManager::DestroyInstance();
+    RenderManager::DestroyInstance();
+    ResourceManager::DestroyInstance();
 }
 
 void Game::GameConfig::WriteToFile(const std::string& filePath) const
