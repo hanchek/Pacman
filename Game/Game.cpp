@@ -70,6 +70,10 @@ void Game::GameInit()
     {
         m_Window.create(m_GameConfig.windowedMode, WINDOW_NAME, sf::Style::Default);
     }
+
+    m_GameConfig.windowView = m_Window.getDefaultView();
+    m_GameConfig.gameWorldView.setViewport(m_GameConfig.gameWorldViewPort);
+    m_GameConfig.UpdateGameWorldView(m_Window.getSize());
 }
 
 void Game::Update(float dt)
@@ -89,6 +93,8 @@ void Game::Update(float dt)
             if (!m_GameConfig.isFullscreen)
             {
                 m_GameConfig.windowedMode = sf::VideoMode(event.size.width, event.size.height);
+                m_GameConfig.UpdateWindowView(m_Window.getSize());
+                m_GameConfig.UpdateGameWorldView(m_Window.getSize());
                 m_GameConfig.WriteToFile(SETTINGS_FILE_PATH);
             }
             break;
@@ -103,8 +109,12 @@ void Game::Render()
 
     if (RenderManager* renderManager = RenderManager::GetInstance())
     {
+        m_Window.setView(m_GameConfig.gameWorldView);
         renderManager->Render(m_Window);
+        m_Window.setView(m_GameConfig.windowView);
     }
+
+    m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("button")));
 
     m_Window.display();
 }
@@ -145,4 +155,19 @@ void Game::GameConfig::ReadFromFile(const std::string& filePath)
     fullscreenMode = sf::VideoMode(fullscreenWidth, fullscreenHeight);
     windowedMode = sf::VideoMode(windowedWidth, windowedHeight);
     isFullscreen = GetPrivateProfileIntA("Window", "IsFullscreen", DEFAULT_FULLSCREEN, filePath.c_str());
+}
+
+void Game::GameConfig::UpdateGameWorldView(const sf::Vector2u& windowSize)
+{
+    const sf::FloatRect& viewPort = gameWorldView.getViewport();
+    const sf::Vector2f viewSize = { windowSize.x * viewPort.width, windowSize.y * viewPort.height };
+
+    gameWorldView.setSize(viewSize);
+    gameWorldView.setCenter(viewSize.x / 2.f, viewSize.y / 2.f);
+}
+
+void Game::GameConfig::UpdateWindowView(const sf::Vector2u& windowSize)
+{
+    windowView.setCenter({ windowSize.x / 2.f, windowSize.y / 2.f });
+    windowView.setSize(sf::Vector2f(windowSize));
 }
