@@ -4,12 +4,65 @@ constexpr size_t memoryForComponents = 1024u * 1024u;
 constexpr size_t numberOfComponentes = 100u;
 constexpr size_t DEFAULT_SIZE_OF_POOL = 1024u * 1024u;
 
-ComponentManager::ComponentManager() : m_MainAllocator(memoryForComponents * static_cast<size_t>(ComponentType::Count))
+EntityComponentManager::EntityComponentManager() : m_MainAllocator(memoryForComponents * static_cast<size_t>(ComponentType::Count))
 {
 
 }
 
-void ComponentManager::DestroyComponent(Component* componentPtr)
+EntityID EntityComponentManager::CreateEntity()
+{
+    EntityID newEntityID = m_Entities.size();
+    // create empty vector of components
+    m_Entities.push_back({});
+
+    return newEntityID;
+}
+
+void EntityComponentManager::DestroyEntity(EntityID entityID)
+{
+    if (!IsEntityValid(entityID))
+    {
+        // [LOG] passed invalid entityID
+        return;
+    }
+
+    for (auto& componentWithType : m_Entities[entityID])
+    {
+        DestroyComponent(componentWithType.component);
+    }
+
+    m_Entities[entityID].clear();
+}
+
+bool EntityComponentManager::IsEntityValid(EntityID entityID)
+{
+    return entityID < m_Entities.size();
+}
+
+Component* EntityComponentManager::GetComponent(EntityID entityID, ComponentType componentType)
+{
+    if (!IsEntityValid(entityID))
+    {
+        // [LOG] passed invalid entityID
+        return nullptr;
+    }
+
+    ComponentWithTypeList& entityComponents = m_Entities[entityID];
+    auto foundIt = std::find_if(entityComponents.begin(), entityComponents.end(), [componentType](ComponentWithType& component)
+        {
+            return componentType == component.type;
+        }
+    );
+
+    if (foundIt != entityComponents.end())
+    {
+        return foundIt->component;
+    }
+
+    return nullptr;
+}
+
+void EntityComponentManager::DestroyComponent(Component* componentPtr)
 {
     if (componentPtr)
     {
@@ -31,7 +84,7 @@ void ComponentManager::DestroyComponent(Component* componentPtr)
     }
 }
 
-PoolAllocator* ComponentManager::CreateComponentPool(ComponentType type, size_t numberOfObjects, size_t objectSize)
+PoolAllocator* EntityComponentManager::CreateComponentPool(ComponentType type, size_t numberOfObjects, size_t objectSize)
 {
     auto foundIt = m_PoolAllocatorsMap.find(type);
     if (foundIt != m_PoolAllocatorsMap.end())

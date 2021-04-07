@@ -15,9 +15,11 @@ void Game::Run()
 
     RenderComponent* createdComponent = nullptr;
 
-    if (ComponentManager* componentManager = ComponentManager::GetInstance())
+    EntityID testEntity;
+    if (EntityComponentManager* componentManager = EntityComponentManager::GetInstance())
     {
-        createdComponent = componentManager->CreateComponent<RenderComponent>("bomb_high_res");
+        testEntity = componentManager->CreateEntity();
+        createdComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
         createdComponent->SetSize({ 64.f, 64.f });
     }
 
@@ -30,9 +32,9 @@ void Game::Run()
         Render();
     }
 
-    if (ComponentManager* componentManager = ComponentManager::GetInstance())
+    if (EntityComponentManager* componentManager = EntityComponentManager::GetInstance())
     {
-        componentManager->DestroyComponent(createdComponent);
+        componentManager->DestroyEntity(testEntity);
     }
 
     GameRelease();
@@ -42,7 +44,7 @@ void Game::GameInit()
 {
     ResourceManager::CreateInstance();
     RenderManager::CreateInstance();
-    ComponentManager::CreateInstance();
+    EntityComponentManager::CreateInstance();
 
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
@@ -109,7 +111,7 @@ void Game::Render()
 
 void Game::GameRelease()
 {
-    ComponentManager::DestroyInstance();
+    EntityComponentManager::DestroyInstance();
     RenderManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }
