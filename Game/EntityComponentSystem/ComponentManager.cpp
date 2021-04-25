@@ -62,6 +62,19 @@ Component* EntityComponentManager::GetComponent(EntityID entityID, ComponentType
     return nullptr;
 }
 
+void EntityComponentManager::Update(float dt)
+{
+    for (auto& objectPool : m_PoolAllocatorsMap)
+    {
+        const std::vector<void*> components = objectPool.second.GetObjects();
+        for (void* componetRaw : components)
+        {
+            Component* component = static_cast<Component*>(componetRaw);
+            component->Update(dt);
+        }
+    }
+}
+
 void EntityComponentManager::DestroyComponent(Component* componentPtr)
 {
     if (componentPtr)

@@ -59,6 +59,7 @@ public:
             {
                 // placement new 
                 T* componentPtr = new (allocatedMemory) T(args...);
+                componentPtr->SetEntity(entityID);
                 m_Entities[entityID].push_back({ componentPtr, type });
 
                 return componentPtr;
@@ -75,6 +76,8 @@ public:
     }
 
     Component* GetComponent(EntityID entityID, ComponentType componentType);
+
+    void Update(float dt);
     
 private:
     EntityComponentManager();

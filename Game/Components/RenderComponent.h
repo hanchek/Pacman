@@ -15,8 +15,11 @@ public:
     void Draw(sf::RenderWindow& window) const;
 
     void SetSize(const sf::Vector2f& size);
-
     sf::Vector2f GetSize() const;
+
+    void SetPosition(const sf::Vector2f& position);
+    sf::Vector2f GetPosition() const;
+    void MovePosition(const sf::Vector2f& distance);
 
     DEFINE_COMPONENT_NAME(RenderComponent);
 

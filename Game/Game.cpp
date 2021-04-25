@@ -101,6 +101,11 @@ void Game::Update(float dt)
         }
         }  
     }
+
+    if (auto* ecs = EntityComponentManager::GetInstance())
+    {
+        ecs->Update(dt);
+    }
 }
 
 void Game::Render()

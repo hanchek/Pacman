@@ -10,6 +10,20 @@ public:
     void Free(void* data);
     void Clear();
 
+    std::vector<void*> GetObjects()
+    {
+        std::vector<void*> allocatedObjects;
+        for (const auto& poolEntry : m_ObjectPool)
+        {
+            if (!poolEntry.isFree)
+            {
+                allocatedObjects.push_back(poolEntry.data);
+            }
+        }
+
+        return allocatedObjects;
+    }
+
 private:
     struct PoolEntry
     {

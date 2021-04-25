@@ -36,7 +36,6 @@ void RenderComponent::SetSize(const sf::Vector2f& size)
         const sf::Vector2u textureSize = texture->getSize();
         m_Sprite.setScale(size.x / textureSize.x, size.y / textureSize.y);
     }
-    
 }
 
 sf::Vector2f RenderComponent::GetSize() const
@@ -48,4 +47,19 @@ sf::Vector2f RenderComponent::GetSize() const
         const sf::Vector2f scale = m_Sprite.getScale();
         return sf::Vector2f(textureSize.x * scale.x, textureSize.y * scale.y);
     }
+}
+
+void RenderComponent::SetPosition(const sf::Vector2f& position)
+{
+    m_Sprite.setPosition(position);
+}
+
+sf::Vector2f RenderComponent::GetPosition() const
+{
+    return m_Sprite.getPosition();
+}
+
+void RenderComponent::MovePosition(const sf::Vector2f& distance)
+{
+    m_Sprite.move(distance);
 }
