@@ -115,6 +115,7 @@ void Game::Render()
     if (RenderManager* renderManager = RenderManager::GetInstance())
     {
         m_Window.setView(m_GameConfig.gameWorldView);
+        m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
         renderManager->Render(m_Window);
         m_Window.setView(m_GameConfig.windowView);
     }
