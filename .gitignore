@@ -3,8 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Extern
+# Solution file since it is generated with Sharpmake
+*.sln
 
+# Extern
 Extern/
 
 # User-specific files
@@ -21,6 +23,7 @@ Extern/
 mono_crash.*
 
 # Build results
+.build/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
