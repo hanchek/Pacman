@@ -6,9 +6,6 @@
 # Solution file since it is generated with Sharpmake
 *.sln
 
-# Extern
-Extern/
-
 # User-specific files
 *.rsuser
 *.suo
