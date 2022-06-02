@@ -4,7 +4,7 @@ using Sharpmake;
 
 [module: Sharpmake.Include("BaseProject.sharpmake.cs")]
 [module: Sharpmake.Include("SFML.sharpmake.cs")]
-[module: Sharpmake.Include("MyStepCopy.sharpmake.cs")]
+[module: Sharpmake.Include("EnTT.sharpmake.cs")]
 
 [Generate]
 public class Game : BaseProject
@@ -21,9 +21,7 @@ public class Game : BaseProject
     {
         base.ConfigureAll(conf, target);
 
-        // Specify where the generated project will be. Here we generate the
-        // vcxproj in a /generated directory.
-        conf.ProjectPath = @"[project.SharpmakeCsPath]/generated";
+        conf.Output = Configuration.OutputType.Exe;
 
         conf.IncludePrivatePaths.Add(MyOptions.RootPath);
 
@@ -31,8 +29,8 @@ public class Game : BaseProject
         conf.VcxprojUserFile.LocalDebuggerWorkingDirectory = MyOptions.RootPath;
 
         conf.Options.Add(Sharpmake.Options.Vc.Compiler.CppLanguageStandard.CPP17);
-        conf.Options.Add(Sharpmake.Options.Vc.General.WindowsTargetPlatformVersion.Latest);
 
         conf.AddPublicDependency<SFML>(target);
+        conf.AddPrivateDependency<EnTT>(target);
     }
 }

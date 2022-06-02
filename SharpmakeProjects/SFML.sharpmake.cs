@@ -4,11 +4,14 @@ using Sharpmake;
 
 [module: Sharpmake.Include("BaseProject.sharpmake.cs")]
 
-[Sharpmake.Export]
+[Generate]
 public class SFML : BaseProject
 {
-    public SFML()
+    public SFML() : base()
     {
+        //The directory that contains the source code that we want include to the project
+        SourceRootPath = Path.Combine(LibRootPath, "include", "SFML");
+
         AddTargets(MyOptions.GetCommonTarget());
     }
     
@@ -16,10 +19,11 @@ public class SFML : BaseProject
     {
         base.ConfigureAll(conf, target);
 
-        conf.ProjectPath = @"[project.SharpmakeCsPath]/generated";
+        conf.Output = Configuration.OutputType.None;
 
         conf.IncludePaths.Add(Path.Combine(LibRootPath, "include"));
 
+        // Set the list of the search directories for static libraries
         conf.LibraryPaths.Add(Path.Combine(LibRootPath, "lib"));
 
         if (target.Optimization == Optimization.Debug)

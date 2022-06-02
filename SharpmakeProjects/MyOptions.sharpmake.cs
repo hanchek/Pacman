@@ -21,12 +21,20 @@ public static class MyOptions
     public static string GetTargetPath(Target target)
     {
         return Path.Combine(BuildPath,
-            string.Format("{0}_{1}", target.Platform.ToString(), target.Optimization));
+            string.Format("{0}_{1}", "[target.Platform]", "[target.Optimization]"));
     }
 
     public static string GetTargetDataPath(Target target)
     {
         return Path.Combine(GetTargetPath(target), "Data");
+    }
+
+    public static string GetIntermediatePath(Target target)
+    {
+        return Path.Combine(
+            "obj",
+            "[project.Name]",
+            "[target.Optimization]");
     }
 }
 
