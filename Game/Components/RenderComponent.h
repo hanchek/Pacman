@@ -4,13 +4,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Game/EntityComponentSystem/Component.h"
-
-class RenderComponent : public Component
+class RenderComponent
 {
 public:
     RenderComponent(const std::string& textureName);
-    ~RenderComponent();
 
     void Draw(sf::RenderWindow& window) const;
 
@@ -19,9 +16,8 @@ public:
 
     void SetPosition(const sf::Vector2f& position);
     sf::Vector2f GetPosition() const;
-    void MovePosition(const sf::Vector2f& distance);
 
-    DEFINE_COMPONENT_NAME(RenderComponent);
+    void MovePosition(const sf::Vector2f& distance);
 
 private:
     sf::Sprite m_Sprite;

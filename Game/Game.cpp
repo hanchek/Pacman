@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 #include "Components/RenderComponent.h"
-#include "EntityComponentSystem/ComponentManager.h"
+#include "EntityComponentSystem/EntityComponentManager.h"
 #include "Render/RenderManager.h"
 #include "ResourceManager/ResourceManager.h"
 #include "Utils/Constants.h"
@@ -13,14 +13,12 @@ void Game::Run()
 {
     GameInit();
 
-    RenderComponent* createdComponent = nullptr;
-
     EntityID testEntity;
-    if (EntityComponentManager* componentManager = EntityComponentManager::GetInstance())
+    if (auto componentManager = NewEntityComponentManager::GetInstance())
     {
         testEntity = componentManager->CreateEntity();
-        createdComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
-        createdComponent->SetSize({ 64.f, 64.f });
+        RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
+        renderComponent.SetSize({ 64.f, 64.f });
     }
 
     sf::Clock clock;
@@ -32,7 +30,7 @@ void Game::Run()
         Render();
     }
 
-    if (EntityComponentManager* componentManager = EntityComponentManager::GetInstance())
+    if (auto componentManager = NewEntityComponentManager::GetInstance())
     {
         componentManager->DestroyEntity(testEntity);
     }
@@ -44,7 +42,7 @@ void Game::GameInit()
 {
     ResourceManager::CreateInstance();
     RenderManager::CreateInstance();
-    EntityComponentManager::CreateInstance();
+    NewEntityComponentManager::CreateInstance();
 
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
@@ -102,7 +100,7 @@ void Game::Update(float dt)
         }  
     }
 
-    if (auto* ecs = EntityComponentManager::GetInstance())
+    if (auto* ecs = NewEntityComponentManager::GetInstance())
     {
         ecs->Update(dt);
     }
@@ -112,11 +110,11 @@ void Game::Render()
 {
     m_Window.clear();
 
-    if (RenderManager* renderManager = RenderManager::GetInstance())
+    if (auto componentManager = NewEntityComponentManager::GetInstance())
     {
         m_Window.setView(m_GameConfig.gameWorldView);
         m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
-        renderManager->Render(m_Window);
+        componentManager->Render(m_Window);
         m_Window.setView(m_GameConfig.windowView);
     }
 
@@ -127,7 +125,7 @@ void Game::Render()
 
 void Game::GameRelease()
 {
-    EntityComponentManager::DestroyInstance();
+    NewEntityComponentManager::DestroyInstance();
     RenderManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }

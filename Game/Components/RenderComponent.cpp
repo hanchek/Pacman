@@ -1,25 +1,12 @@
 #include "RenderComponent.h"
 
-#include "Game/Render/RenderManager.h"
 #include "Game/ResourceManager/ResourceManager.h"
 
 RenderComponent::RenderComponent(const std::string& textureName)
 {
-    if (RenderManager* renderManager = RenderManager::GetInstance())
-    {
-        renderManager->RegisterRenderComponent(this);
-    }
     if (ResourceManager* resourceManager = ResourceManager::GetInstance())
     {
         m_Sprite.setTexture(resourceManager->GetTexture(textureName));
-    }
-}
-
-RenderComponent::~RenderComponent()
-{
-    if (RenderManager* renderManager = RenderManager::GetInstance())
-    {
-        renderManager->UnregisterRenderComponent(this);
     }
 }
 
