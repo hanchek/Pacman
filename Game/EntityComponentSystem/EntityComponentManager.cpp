@@ -1,16 +1,16 @@
 #include "EntityComponentManager.h"
 
-EntityID NewEntityComponentManager::CreateEntity()
+EntityID EntityComponentManager::CreateEntity()
 {
     return myRegistry.create();
 }
 
-void NewEntityComponentManager::DestroyEntity(EntityID entityID)
+void EntityComponentManager::DestroyEntity(EntityID entityID)
 {
     myRegistry.destroy(entityID);
 }
 
-bool NewEntityComponentManager::IsEntityValid(EntityID entityID) const
+bool EntityComponentManager::IsEntityValid(EntityID entityID) const
 {
     return myRegistry.valid(entityID);
 }

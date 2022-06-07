@@ -9,10 +9,10 @@ using EntityID = entt::entity;
 template<typename... ComponentType>
 using ComponentsIterable = entt::basic_view<EntityID, entt::get_t<ComponentType...>, entt::exclude_t<>>;
 
-class NewEntityComponentManager : public Singleton<NewEntityComponentManager>
+class EntityComponentManager : public Singleton<EntityComponentManager>
 {
 public:
-    friend Singleton<NewEntityComponentManager>;
+    friend Singleton<EntityComponentManager>;
 
     EntityID CreateEntity();
     void DestroyEntity(EntityID entityID);
@@ -51,6 +51,6 @@ public:
 private:
     entt::registry myRegistry;
 
-    NewEntityComponentManager() = default;
-    ~NewEntityComponentManager() = default;
+    EntityComponentManager() = default;
+    ~EntityComponentManager() = default;
 };

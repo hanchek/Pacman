@@ -14,7 +14,7 @@ void Game::Run()
     GameInit();
 
     EntityID testEntity;
-    if (auto componentManager = NewEntityComponentManager::GetInstance())
+    if (auto componentManager = EntityComponentManager::GetInstance())
     {
         testEntity = componentManager->CreateEntity();
         RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
@@ -30,7 +30,7 @@ void Game::Run()
         Render();
     }
 
-    if (auto componentManager = NewEntityComponentManager::GetInstance())
+    if (auto componentManager = EntityComponentManager::GetInstance())
     {
         componentManager->DestroyEntity(testEntity);
     }
@@ -42,7 +42,7 @@ void Game::GameInit()
 {
     ResourceManager::CreateInstance();
     RenderManager::CreateInstance();
-    NewEntityComponentManager::CreateInstance();
+    EntityComponentManager::CreateInstance();
 
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
@@ -105,7 +105,7 @@ void Game::Render()
 {
     m_Window.clear();
 
-    if (auto componentManager = NewEntityComponentManager::GetInstance())
+    if (auto componentManager = EntityComponentManager::GetInstance())
     {
         m_Window.setView(m_GameConfig.gameWorldView);
         m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
@@ -124,7 +124,7 @@ void Game::Render()
 
 void Game::GameRelease()
 {
-    NewEntityComponentManager::DestroyInstance();
+    EntityComponentManager::DestroyInstance();
     RenderManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }
