@@ -5,7 +5,6 @@
 
 #include "Components/RenderComponent.h"
 #include "EntityComponentSystem/EntityComponentManager.h"
-#include "Render/RenderManager.h"
 #include "ResourceManager/ResourceManager.h"
 #include "Utils/Constants.h"
 
@@ -41,7 +40,6 @@ void Game::Run()
 void Game::GameInit()
 {
     ResourceManager::CreateInstance();
-    RenderManager::CreateInstance();
     EntityComponentManager::CreateInstance();
 
     m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
@@ -125,6 +123,5 @@ void Game::Render()
 void Game::GameRelease()
 {
     EntityComponentManager::DestroyInstance();
-    RenderManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }
