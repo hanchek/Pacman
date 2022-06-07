@@ -1,17 +1,13 @@
 #pragma once
 
-#include <entt/entity/helper.hpp>
 #include <entt/entity/registry.hpp>
 
 #include "Game/Singleton.h"
 
 using EntityID = entt::entity;
-using UpdateTask = std::function<void(float dt, entt::registry& reg)>;
 
-namespace sf
-{
-    class RenderWindow;
-}
+template<typename... ComponentType>
+using ComponentsIterable = entt::basic_view<EntityID, entt::get_t<ComponentType...>, entt::exclude_t<>>;
 
 class NewEntityComponentManager : public Singleton<NewEntityComponentManager>
 {
@@ -39,16 +35,21 @@ public:
     {
         return entt::to_entity(myRegistry, component);
     }
+    
+    template<typename ComponentType, typename... Others>
+    ComponentsIterable<ComponentType, Others...> GetComponentsIterable()
+    {
+        return myRegistry.view<ComponentType, Others...>();
+    }
 
-    void AddUpdateTask(UpdateTask task);
-
-    void Update(float dt);
-
-    void Render(sf::RenderWindow& window);
+    template<typename ComponentType, typename... Others, typename Func>
+    void ForEachComponent(Func func)
+    {
+        GetComponentsIterable<ComponentType, Others...>().each(func);
+    }
 
 private:
     entt::registry myRegistry;
-    std::vector<UpdateTask> myTasks;
 
     NewEntityComponentManager() = default;
     ~NewEntityComponentManager() = default;

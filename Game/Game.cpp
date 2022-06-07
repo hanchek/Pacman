@@ -99,11 +99,6 @@ void Game::Update(float dt)
         }
         }  
     }
-
-    if (auto* ecs = NewEntityComponentManager::GetInstance())
-    {
-        ecs->Update(dt);
-    }
 }
 
 void Game::Render()
@@ -114,7 +109,11 @@ void Game::Render()
     {
         m_Window.setView(m_GameConfig.gameWorldView);
         m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
-        componentManager->Render(m_Window);
+        
+        componentManager->ForEachComponent<RenderComponent>([&m_Window = m_Window](RenderComponent& renderComponent) {
+            renderComponent.Draw(m_Window);
+        });
+
         m_Window.setView(m_GameConfig.windowView);
     }
 
