@@ -4,49 +4,48 @@
 
 RenderComponent::RenderComponent(const std::string& textureName)
 {
-    if (ResourceManager* resourceManager = ResourceManager::GetInstance())
-    {
-        m_Sprite.setTexture(resourceManager->GetTexture(textureName));
-    }
+    mySprite.setTexture(ResourceManager::GetInstance()->GetTexture(textureName));
 }
 
 void RenderComponent::Draw(sf::RenderWindow& window) const
 {
-    window.draw(m_Sprite);
+    window.draw(mySprite);
 }
 
 void RenderComponent::SetSize(const sf::Vector2f& size)
 {
-    const sf::Texture* texture = m_Sprite.getTexture();
+    const sf::Texture* texture = mySprite.getTexture();
     if (texture)
     {
-        const sf::Vector2u textureSize = texture->getSize();
-        m_Sprite.setScale(size.x / textureSize.x, size.y / textureSize.y);
+        const sf::Vector2u& textureSize = texture->getSize();
+        mySprite.setScale(size.x / textureSize.x, size.y / textureSize.y);
     }
 }
 
 sf::Vector2f RenderComponent::GetSize() const
 {
-    const sf::Texture* texture = m_Sprite.getTexture();
+    const sf::Texture* texture = mySprite.getTexture();
     if (texture)
     {
-        const sf::Vector2u textureSize = texture->getSize();
-        const sf::Vector2f scale = m_Sprite.getScale();
-        return sf::Vector2f(textureSize.x * scale.x, textureSize.y * scale.y);
+        const sf::Vector2u& textureSize = texture->getSize();
+        const sf::Vector2f& scale = mySprite.getScale();
+        return { textureSize.x * scale.x, textureSize.y * scale.y };
     }
+
+    return {0.f, 0.f};
 }
 
 void RenderComponent::SetPosition(const sf::Vector2f& position)
 {
-    m_Sprite.setPosition(position);
+    mySprite.setPosition(position);
 }
 
 sf::Vector2f RenderComponent::GetPosition() const
 {
-    return m_Sprite.getPosition();
+    return mySprite.getPosition();
 }
 
 void RenderComponent::MovePosition(const sf::Vector2f& distance)
 {
-    m_Sprite.move(distance);
+    mySprite.move(distance);
 }

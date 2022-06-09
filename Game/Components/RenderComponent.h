@@ -2,7 +2,8 @@
 
 #include <string>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 class RenderComponent
 {
@@ -20,5 +21,5 @@ public:
     void MovePosition(const sf::Vector2f& distance);
 
 private:
-    sf::Sprite m_Sprite;
+    sf::Sprite mySprite;
 };

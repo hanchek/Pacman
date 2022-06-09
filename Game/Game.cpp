@@ -3,6 +3,8 @@
 #include <cassert>
 #include <Windows.h>
 
+#include <SFML/Window/Event.hpp>
+
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
@@ -15,8 +17,10 @@ void Game::Run()
     GameInit();
 
     EntityID testEntity;
-    if (auto componentManager = EntityComponentManager::GetInstance())
+
     {
+        auto componentManager = EntityComponentManager::GetInstance();
+
         testEntity = componentManager->CreateEntity();
         RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
         renderComponent.SetSize({ 64.f, 64.f });
@@ -26,17 +30,14 @@ void Game::Run()
 
     sf::Clock clock;
     sf::Time dt;
-    while (m_Window.isOpen())
+    while (myWindow.isOpen())
     {
         dt = clock.restart();
         Update(dt.asSeconds());
         Render();
     }
 
-    if (auto componentManager = EntityComponentManager::GetInstance())
-    {
-        componentManager->DestroyEntity(testEntity);
-    }
+    EntityComponentManager::GetInstance()->DestroyEntity(testEntity);
 
     GameRelease();
 }
@@ -46,56 +47,53 @@ void Game::GameInit()
     ResourceManager::CreateInstance();
     EntityComponentManager::CreateInstance();
 
-    m_GameConfig.ReadFromFile(SETTINGS_FILE_PATH);
+    myGameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
-    if (ResourceManager* resourceManager = ResourceManager::GetInstance())
-    {
-        resourceManager->PreloadTexturesFromFolder(TEXTURES_FOLDER_PATH);
-    }
+    ResourceManager::GetInstance()->PreloadTexturesFromFolder(TEXTURES_FOLDER_PATH);
 
-    if (m_GameConfig.isFullscreen)
+    if (myGameConfig.isFullscreen)
     {
-        if (m_GameConfig.fullscreenMode.isValid())
+        if (myGameConfig.fullscreenMode.isValid())
         {
-            m_Window.create(m_GameConfig.fullscreenMode, WINDOW_NAME, sf::Style::Fullscreen);
+            myWindow.create(myGameConfig.fullscreenMode, WINDOW_NAME, sf::Style::Fullscreen);
         }
         else
         {
             const std::vector<sf::VideoMode>& videoModes = sf::VideoMode::getFullscreenModes();
             assert(!videoModes.empty() && "There should be available video mode");
-            m_Window.create(videoModes[0], WINDOW_NAME, sf::Style::Fullscreen);
+            myWindow.create(videoModes[0], WINDOW_NAME, sf::Style::Fullscreen);
         }
     }
     else
     {
-        m_Window.create(m_GameConfig.windowedMode, WINDOW_NAME, sf::Style::Default);
+        myWindow.create(myGameConfig.windowedMode, WINDOW_NAME, sf::Style::Default);
     }
 
-    m_GameConfig.windowView = m_Window.getDefaultView();
-    m_GameConfig.gameWorldView.setViewport(m_GameConfig.gameWorldViewPort);
-    m_GameConfig.UpdateGameWorldView(m_Window.getSize());
+    myGameConfig.windowView = myWindow.getDefaultView();
+    myGameConfig.gameWorldView.setViewport(myGameConfig.gameWorldViewPort);
+    myGameConfig.UpdateGameWorldView(myWindow.getSize());
 }
 
 void Game::Update(float dt)
 {
     sf::Event event;
-    while (m_Window.pollEvent(event))
+    while (myWindow.pollEvent(event))
     {
         switch (event.type)
         {
         case sf::Event::Closed:
         {
-            m_Window.close();
+            myWindow.close();
             break;
         }
         case sf::Event::Resized:
         {
-            if (!m_GameConfig.isFullscreen)
+            if (!myGameConfig.isFullscreen)
             {
-                m_GameConfig.windowedMode = sf::VideoMode(event.size.width, event.size.height);
-                m_GameConfig.UpdateWindowView(m_Window.getSize());
-                m_GameConfig.UpdateGameWorldView(m_Window.getSize());
-                m_GameConfig.WriteToFile(SETTINGS_FILE_PATH);
+                myGameConfig.windowedMode = sf::VideoMode(event.size.width, event.size.height);
+                myGameConfig.UpdateWindowView(myWindow.getSize());
+                myGameConfig.UpdateGameWorldView(myWindow.getSize());
+                myGameConfig.WriteToFile(SETTINGS_FILE_PATH);
             }
             break;
         }
@@ -114,23 +112,27 @@ void Game::Update(float dt)
 
 void Game::Render()
 {
-    m_Window.clear();
+    myWindow.clear();
 
-    if (auto componentManager = EntityComponentManager::GetInstance())
-    {
-        m_Window.setView(m_GameConfig.gameWorldView);
-        m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
+    //gameworld render section begin
+    myWindow.setView(myGameConfig.gameWorldView);
+    myWindow.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
         
-        componentManager->ForEachComponent<RenderComponent>([&m_Window = m_Window](RenderComponent& renderComponent) {
+    {
+        auto componentManager = EntityComponentManager::GetInstance();
+        componentManager->ForEachComponent<RenderComponent>([&m_Window = myWindow](RenderComponent& renderComponent) {
             renderComponent.Draw(m_Window);
         });
-
-        m_Window.setView(m_GameConfig.windowView);
     }
+    // gameworld render section end
 
-    m_Window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("button")));
+    //UI render section begin
+    myWindow.setView(myGameConfig.windowView);
 
-    m_Window.display();
+    myWindow.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("button")));
+    // UI render section end
+
+    myWindow.display();
 }
 
 void Game::GameRelease()
