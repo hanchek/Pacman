@@ -1,7 +1,5 @@
+#include "Game/pch.h"
 #include "ResourceManager.h"
-
-#include <cassert>
-#include <filesystem>
 
 const sf::Texture& ResourceManager::GetTexture(const std::string& name)
 {

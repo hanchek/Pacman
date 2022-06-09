@@ -1,3 +1,4 @@
+#include "Game/pch.h"
 #include "ControlsComponent.h"
 
 #include "MovementComponent.h"

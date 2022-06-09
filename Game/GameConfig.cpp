@@ -1,8 +1,5 @@
+#include "Game/pch.h"
 #include "GameConfig.h"
-
-#include <Windows.h>
-
-#include "Utils/Constants.h"
 
 void GameConfig::WriteToFile(const std::string& filePath) const
 {

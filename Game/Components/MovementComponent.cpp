@@ -1,3 +1,4 @@
+#include "Game/pch.h"
 #include "MovementComponent.h"
 
 #include "RenderComponent.h"

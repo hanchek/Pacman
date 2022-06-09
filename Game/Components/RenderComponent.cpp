@@ -1,3 +1,4 @@
+#include "Game/pch.h"
 #include "RenderComponent.h"
 
 #include "Game/ResourceManager/ResourceManager.h"

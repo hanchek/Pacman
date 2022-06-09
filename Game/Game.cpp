@@ -1,16 +1,11 @@
+#include "Game/pch.h"
 #include "Game.h"
-
-#include <cassert>
-#include <Windows.h>
-
-#include <SFML/Window/Event.hpp>
 
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
 #include "EntityComponentSystem/EntityComponentManager.h"
 #include "ResourceManager/ResourceManager.h"
-#include "Utils/Constants.h"
 
 void Game::Run()
 {

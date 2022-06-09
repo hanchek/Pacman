@@ -32,5 +32,8 @@ public class Game : BaseProject
 
         conf.AddPublicDependency<SFML>(target);
         conf.AddPrivateDependency<EnTT>(target);
+
+        conf.PrecompHeader = "Game/pch.h";
+        conf.PrecompSource = "Game/pch.cpp";
     }
 }
