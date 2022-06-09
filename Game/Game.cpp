@@ -3,6 +3,8 @@
 #include <cassert>
 #include <Windows.h>
 
+#include "Components/ControlsComponent.h"
+#include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
 #include "EntityComponentSystem/EntityComponentManager.h"
 #include "ResourceManager/ResourceManager.h"
@@ -18,6 +20,8 @@ void Game::Run()
         testEntity = componentManager->CreateEntity();
         RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
         renderComponent.SetSize({ 64.f, 64.f });
+        componentManager->CreateComponent<MovementComponent>(testEntity, 100.f);
+        componentManager->CreateComponent<ControlsComponent>(testEntity);
     }
 
     sf::Clock clock;
@@ -97,6 +101,15 @@ void Game::Update(float dt)
         }
         }  
     }
+
+    auto componentManager = EntityComponentManager::GetInstance();
+
+    componentManager->ForEachComponent<ControlsComponent, MovementComponent>(&ControlsComponent::Update);
+
+    auto movementUpdate = [dt](MovementComponent& movementComponent, RenderComponent& renderComponent) {
+        movementComponent.Update(dt, renderComponent);
+    };
+    componentManager->ForEachComponent<MovementComponent, RenderComponent>(movementUpdate);
 }
 
 void Game::Render()
