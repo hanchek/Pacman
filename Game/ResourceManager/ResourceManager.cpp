@@ -1,13 +1,14 @@
 #include "ResourceManager.h"
-#include <filesystem>
+
 #include <cassert>
+#include <filesystem>
 
 const sf::Texture& ResourceManager::GetTexture(const std::string& name)
 {
     const std::size_t nameHash = std::hash<std::string>{}(name);
-    auto it = s_Textures.find(nameHash);
+    auto it = theTextures.find(nameHash);
 
-    if (it != s_Textures.end())
+    if (it != theTextures.end())
     {
         return *(it->second);
     }
@@ -21,7 +22,7 @@ const sf::Texture& ResourceManager::GetTexture(const std::string& name)
 
     // insert returns a pair consisting of an iterator to the inserted element
     // and a bool denoting whether the insertion took place
-    const auto insertResult = s_Textures.insert(std::make_pair(nameHash, std::move(errorTexture)));
+    const auto insertResult = theTextures.insert(std::make_pair(nameHash, std::move(errorTexture)));
     const auto insertedElement = insertResult.first;
 
     return *(insertedElement->second);
@@ -47,7 +48,7 @@ void ResourceManager::PreloadTexturesFromFolder(const std::string& relativePath)
                 const std::string fileName = entryString.substr(offset1 + 1, offset2 - offset1 - 1);
 
                 const size_t nameHash = std::hash<std::string>{}(fileName);
-                s_Textures.insert(std::make_pair(nameHash, std::move(texture)));
+                theTextures.insert(std::make_pair(nameHash, std::move(texture)));
             }
             else
             {

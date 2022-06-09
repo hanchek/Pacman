@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "GameConfig.h"
 
@@ -14,6 +14,6 @@ private:
     void Render();
     void GameRelease();
 
-    GameConfig m_GameConfig;
-    sf::RenderWindow m_Window;
+    GameConfig myGameConfig;
+    sf::RenderWindow myWindow;
 };

@@ -49,8 +49,8 @@ public:
     }
 
 private:
-    entt::registry myRegistry;
-
     EntityComponentManager() = default;
     ~EntityComponentManager() = default;
+
+    entt::registry myRegistry;
 };
