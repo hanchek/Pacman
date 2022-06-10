@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <unordered_map>
+
 #include <SFML/Graphics/Texture.hpp>
 
 #include "Game/Singleton.h"

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Window/VideoMode.hpp>
