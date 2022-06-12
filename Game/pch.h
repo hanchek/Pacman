@@ -1,7 +1,8 @@
 #pragma once
 
-
+#include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <filesystem>
 #include <memory>
 #include <string>
@@ -12,3 +13,4 @@
 
 #include "GameConfig.h"
 #include "Utils/Constants.h"
+#include "Utils/Utils.h"

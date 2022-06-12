@@ -5,12 +5,12 @@
 
 void ControlsComponent::Update(MovementComponent& movementComponent)
 {
-    myMovementDirection = { 0.f, 0.f };
+    myMovementDirection = { 0, 0 };
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { myMovementDirection = { -1.f, 0.f }; }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) { myMovementDirection = { 0.f, -1.f }; }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { myMovementDirection = { 1.f, 0.f }; }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) { myMovementDirection = { 0.f, 1.f }; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) { myMovementDirection.x -= 1; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) { myMovementDirection.y -= 1; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { myMovementDirection.x += 1; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) { myMovementDirection.y += 1; }
 
-    movementComponent.SetVelocity(myMovementDirection);
+    movementComponent.SetDirection(myMovementDirection);
 }

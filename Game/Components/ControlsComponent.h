@@ -10,5 +10,5 @@ public:
     void Update(MovementComponent& movementComponent);
 
 private:
-    sf::Vector2f myMovementDirection = {0.f, 0.f};
+    sf::Vector2i myMovementDirection = { 0, 0 };
 };

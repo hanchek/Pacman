@@ -6,6 +6,7 @@
 RenderComponent::RenderComponent(const std::string& textureName)
 {
     mySprite.setTexture(ResourceManager::GetInstance()->GetTexture(textureName));
+    mySprite.setOrigin(GetSize() / 2.f);
 }
 
 void RenderComponent::Draw(sf::RenderWindow& window) const

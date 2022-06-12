@@ -4,6 +4,9 @@
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
+#include "Components/StaticWallComponent.h"
+
+#include "CollisionSystem/CollisionManager.h"
 #include "EntityComponentSystem/EntityComponentManager.h"
 #include "ResourceManager/ResourceManager.h"
 
@@ -18,8 +21,9 @@ void Game::Run()
 
         testEntity = componentManager->CreateEntity();
         RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
-        renderComponent.SetSize({ 64.f, 64.f });
-        componentManager->CreateComponent<MovementComponent>(testEntity, 100.f);
+        renderComponent.SetPosition({ 150.f, 150.f });
+        renderComponent.SetSize({ 100.f, 100.f });
+        componentManager->CreateComponent<MovementComponent>(testEntity, 200.f);
         componentManager->CreateComponent<ControlsComponent>(testEntity);
     }
 
@@ -28,7 +32,7 @@ void Game::Run()
     while (myWindow.isOpen())
     {
         dt = clock.restart();
-        Update(dt.asSeconds());
+        Update((std::min)(dt.asSeconds(), FRAME_TIME));
         Render();
     }
 
@@ -41,6 +45,7 @@ void Game::GameInit()
 {
     ResourceManager::CreateInstance();
     EntityComponentManager::CreateInstance();
+    CollisionManager::CreateInstance();
 
     myGameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
@@ -67,6 +72,10 @@ void Game::GameInit()
     myGameConfig.windowView = myWindow.getDefaultView();
     myGameConfig.gameWorldView.setViewport(myGameConfig.gameWorldViewPort);
     myGameConfig.UpdateGameWorldView(myWindow.getSize());
+
+    CollisionManager::GetInstance()->UpdateTiles();
+    EntityComponentManager::GetInstance()
+        ->ForEachComponent<StaticWallComponent, RenderComponent>(&StaticWallComponent::Init);
 }
 
 void Game::Update(float dt)
@@ -132,6 +141,7 @@ void Game::Render()
 
 void Game::GameRelease()
 {
+    CollisionManager::DestroyInstance();
     EntityComponentManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }

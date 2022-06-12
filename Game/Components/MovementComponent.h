@@ -11,10 +11,11 @@ public:
     
     void Update(float dt, RenderComponent& renderComponent);
 
-    void SetVelocity(const sf::Vector2f& velocity) { myVelocity = velocity; }
-    sf::Vector2f GetVelocity() const { return myVelocity; }
+    void SetDirection(const sf::Vector2i& velocity) { myDirection = velocity; }
+    sf::Vector2i GetDirection() const { return myDirection; }
+    sf::Vector2f GetDirectionF() const { return { float(myDirection.x), float(myDirection.y) }; }
 
 private:
     float mySpeed = 1.f;
-    sf::Vector2f myVelocity = {0.f, 0.f};
+    sf::Vector2i myDirection = { 0, 0 };
 };
