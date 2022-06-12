@@ -1,6 +1,8 @@
 #include "Game/pch.h"
 #include "Game.h"
 
+#include "Test.h"
+
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
@@ -14,18 +16,9 @@ void Game::Run()
 {
     GameInit();
 
-    EntityID testEntity;
-
-    {
-        auto componentManager = EntityComponentManager::GetInstance();
-
-        testEntity = componentManager->CreateEntity();
-        RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(testEntity, "bomb_high_res");
-        renderComponent.SetPosition({ 150.f, 150.f });
-        renderComponent.SetSize({ 100.f, 100.f });
-        componentManager->CreateComponent<MovementComponent>(testEntity, 200.f);
-        componentManager->CreateComponent<ControlsComponent>(testEntity);
-    }
+    Test::CreatePlayer();
+    Test::CreateWalls();
+    Test::CreateBackGround();
 
     sf::Clock clock;
     sf::Time dt;
@@ -36,7 +29,7 @@ void Game::Run()
         Render();
     }
 
-    EntityComponentManager::GetInstance()->DestroyEntity(testEntity);
+    Test::DestroyPlayer();
 
     GameRelease();
 }
@@ -120,8 +113,7 @@ void Game::Render()
 
     //gameworld render section begin
     myWindow.setView(myGameConfig.gameWorldView);
-    myWindow.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("worldBackground")));
-        
+
     {
         auto componentManager = EntityComponentManager::GetInstance();
         componentManager->ForEachComponent<RenderComponent>([&m_Window = myWindow](RenderComponent& renderComponent) {
@@ -133,7 +125,7 @@ void Game::Render()
     //UI render section begin
     myWindow.setView(myGameConfig.windowView);
 
-    myWindow.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("button")));
+    Test::DrawMissingTexture(myWindow);
     // UI render section end
 
     myWindow.display();
