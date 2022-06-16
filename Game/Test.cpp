@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Components/AnimationComponent.h"
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
@@ -27,11 +28,27 @@ void Test::CreatePlayer()
     auto componentManager = EntityComponentManager::GetInstance();
 
     playerEntity = componentManager->CreateEntity();
-    RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(playerEntity, "player");
+    RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(
+        playerEntity, "player_animated", sf::IntRect(0, 0, 15, 24));
     renderComponent.SetPosition({ 150.f, 150.f });
-    renderComponent.SetSize({ 100.f, 100.f });
+    renderComponent.SetSize({ 62.5f, 100.f });
     componentManager->CreateComponent<MovementComponent>(playerEntity, 200.f);
     componentManager->CreateComponent<ControlsComponent>(playerEntity);
+}
+
+void Test::CreateAnimatedPlayer()
+{
+    auto componentManager = EntityComponentManager::GetInstance();
+
+    playerEntity = componentManager->CreateEntity();
+    RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(
+        playerEntity, "player_animated", sf::IntRect(0, 0, 16, 24));
+    renderComponent.SetPosition({ 150.f, 150.f });
+    renderComponent.SetSize({ 62.5f, 100.f });
+    componentManager->CreateComponent<MovementComponent>(playerEntity, 200.f);
+    componentManager->CreateComponent<ControlsComponent>(playerEntity);
+    std::vector<sf::Vector2i> animationPositions = { {0,0}, {16,0}, {32,0}, {48,0} };
+    componentManager->CreateComponent<AnimationComponent>(playerEntity, std::move(animationPositions), 2.f);
 }
 
 void Test::DestroyPlayer()

@@ -9,6 +9,7 @@ class RenderComponent
 {
 public:
     RenderComponent(const std::string& textureName);
+    RenderComponent(const std::string& textureName, const sf::IntRect& textureRect);
 
     void Draw(sf::RenderWindow& window) const;
 
@@ -19,6 +20,9 @@ public:
     sf::Vector2f GetPosition() const;
 
     void MovePosition(const sf::Vector2f& distance);
+
+    void SetTextureRectPosition(const sf::Vector2i& position);
+    sf::Vector2i GetTextureRectPosition() const;
 
 private:
     sf::Sprite mySprite;

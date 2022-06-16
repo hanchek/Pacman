@@ -6,7 +6,15 @@
 RenderComponent::RenderComponent(const std::string& textureName)
 {
     mySprite.setTexture(ResourceManager::GetInstance()->GetTexture(textureName));
-    mySprite.setOrigin(GetSize() / 2.f);
+    const sf::IntRect& textureRect = mySprite.getTextureRect();
+    mySprite.setOrigin(textureRect.width / 2.f, textureRect.height / 2.f);
+}
+
+RenderComponent::RenderComponent(const std::string& textureName, const sf::IntRect& textureRect)
+{
+    mySprite.setTexture(ResourceManager::GetInstance()->GetTexture(textureName));
+    mySprite.setTextureRect(textureRect);
+    mySprite.setOrigin(textureRect.width / 2.f, textureRect.height / 2.f);
 }
 
 void RenderComponent::Draw(sf::RenderWindow& window) const
@@ -16,25 +24,15 @@ void RenderComponent::Draw(sf::RenderWindow& window) const
 
 void RenderComponent::SetSize(const sf::Vector2f& size)
 {
-    const sf::Texture* texture = mySprite.getTexture();
-    if (texture)
-    {
-        const sf::Vector2u& textureSize = texture->getSize();
-        mySprite.setScale(size.x / textureSize.x, size.y / textureSize.y);
-    }
+    const sf::IntRect& textureRect = mySprite.getTextureRect();
+    mySprite.setScale(size.x / textureRect.width, size.y / textureRect.height);
 }
 
 sf::Vector2f RenderComponent::GetSize() const
 {
-    const sf::Texture* texture = mySprite.getTexture();
-    if (texture)
-    {
-        const sf::Vector2u& textureSize = texture->getSize();
-        const sf::Vector2f& scale = mySprite.getScale();
-        return { textureSize.x * scale.x, textureSize.y * scale.y };
-    }
-
-    return {0.f, 0.f};
+    const sf::IntRect& textureRect = mySprite.getTextureRect();
+    const sf::Vector2f& scale = mySprite.getScale();
+    return { textureRect.width * scale.x, textureRect.height * scale.y };
 }
 
 void RenderComponent::SetPosition(const sf::Vector2f& position)
@@ -50,4 +48,18 @@ sf::Vector2f RenderComponent::GetPosition() const
 void RenderComponent::MovePosition(const sf::Vector2f& distance)
 {
     mySprite.move(distance);
+}
+
+void RenderComponent::SetTextureRectPosition(const sf::Vector2i& position)
+{
+    sf::IntRect textureRect = mySprite.getTextureRect();
+    textureRect.left = position.x;
+    textureRect.top = position.y;
+    mySprite.setTextureRect(textureRect);
+}
+
+sf::Vector2i RenderComponent::GetTextureRectPosition() const
+{
+    const sf::IntRect& textureRect = mySprite.getTextureRect();
+    return { textureRect.left, textureRect.top };
 }

@@ -3,6 +3,7 @@
 
 #include "Test.h"
 
+#include "Components/AnimationComponent.h"
 #include "Components/ControlsComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
@@ -16,7 +17,7 @@ void Game::Run()
 {
     GameInit();
 
-    Test::CreatePlayer();
+    Test::CreateAnimatedPlayer();
     Test::CreateWalls();
     Test::CreateBackGround();
 
@@ -105,6 +106,11 @@ void Game::Update(float dt)
         movementComponent.Update(dt, renderComponent);
     };
     componentManager->ForEachComponent<MovementComponent, RenderComponent>(movementUpdate);
+
+    auto animationUpdate = [dt](AnimationComponent& animationComponent, RenderComponent& renderComponent) {
+        animationComponent.Update(dt, renderComponent);
+    };
+    componentManager->ForEachComponent<AnimationComponent, RenderComponent>(animationUpdate);
 }
 
 void Game::Render()

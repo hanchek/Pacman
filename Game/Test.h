@@ -11,6 +11,7 @@ namespace Test
 {
     void CreateBackGround();
     void CreatePlayer();
+    void CreateAnimatedPlayer();
     void DestroyPlayer();
 
     void CreateWalls();
