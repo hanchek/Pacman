@@ -5,6 +5,7 @@
 
 #include "Components/AnimationComponent.h"
 #include "Components/ControlsComponent.h"
+#include "Components/MovementAnimationComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
 #include "Components/StaticWallComponent.h"
@@ -111,6 +112,12 @@ void Game::Update(float dt)
         animationComponent.Update(dt, renderComponent);
     };
     componentManager->ForEachComponent<AnimationComponent, RenderComponent>(animationUpdate);
+
+    auto movementAnimationUpdate = [dt](MovementAnimationComponent& animationComponent,
+        const MovementComponent& movementComponent, RenderComponent& renderComponent) {
+        animationComponent.Update(dt, movementComponent, renderComponent);
+    };
+    componentManager->ForEachComponent<MovementAnimationComponent, MovementComponent, RenderComponent>(movementAnimationUpdate);
 }
 
 void Game::Render()

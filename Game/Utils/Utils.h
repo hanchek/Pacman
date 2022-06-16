@@ -4,6 +4,15 @@
 
 namespace Utils
 {
+    enum class Orientation
+    {
+        Left,
+        Top,
+        Right,
+        Bottom,
+        None
+    };
+
     // returns true if the value was out of boundries false otherwise
     template<typename T>
     bool ClampVector(sf::Vector2<T>& inout, const sf::Vector2<T>& topleft, const sf::Vector2<T>& downright)
@@ -33,4 +42,6 @@ namespace Utils
 
     // returns the difference between in and out values
     float Clamp(float& inout, float leftBorder, float rightBorder);
+
+    Orientation ToOrientation(const sf::Vector2i& vector);
 }

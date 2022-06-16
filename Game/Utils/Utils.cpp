@@ -71,6 +71,16 @@ namespace Utils
 
         return 0.f;
     }
+
+    Orientation ToOrientation(const sf::Vector2i& vector)
+    {
+        if (vector.x < 0) { return Orientation::Left; }
+        if (vector.y < 0) { return Orientation::Top; }
+        if (vector.x > 0) { return Orientation::Right; }
+        if (vector.y > 0) { return Orientation::Bottom; }
+
+        return Orientation::None;
+    }
 }
 
 

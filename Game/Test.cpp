@@ -5,6 +5,7 @@
 
 #include "Components/AnimationComponent.h"
 #include "Components/ControlsComponent.h"
+#include "Components/MovementAnimationComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
 #include "Components/StaticWallComponent.h"
@@ -21,6 +22,8 @@ void Test::CreateBackGround()
 
     const EntityID backGroundID = componentManager->CreateEntity();
     RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(backGroundID, "worldBackground");
+    renderComponent.SetSize({ MAP_WIDTH * MAP_SCALE, MAP_HEIGHT * MAP_SCALE });
+    renderComponent.SetPosition({ MAP_WIDTH * MAP_SCALE / 2.f, MAP_HEIGHT * MAP_SCALE / 2.f });
 }
 
 void Test::CreatePlayer()
@@ -45,10 +48,14 @@ void Test::CreateAnimatedPlayer()
         playerEntity, "player_animated", sf::IntRect(0, 0, 16, 24));
     renderComponent.SetPosition({ 150.f, 150.f });
     renderComponent.SetSize({ 62.5f, 100.f });
-    componentManager->CreateComponent<MovementComponent>(playerEntity, 200.f);
+    componentManager->CreateComponent<MovementComponent>(playerEntity, 300.f);
     componentManager->CreateComponent<ControlsComponent>(playerEntity);
-    std::vector<sf::Vector2i> animationPositions = { {0,0}, {16,0}, {32,0}, {48,0} };
-    componentManager->CreateComponent<AnimationComponent>(playerEntity, std::move(animationPositions), 2.f);
+    MovementAnimationFrames animationFrames;
+    animationFrames.bottomFrames = { {0,0}, {16,0}, {32,0}, {48,0} };
+    animationFrames.rightFrames = { {0,24}, {16,24}, {32,24}, {48,24} };
+    animationFrames.leftFrames = { {0,48}, {16,48}, {32,48}, {48,48} };
+    animationFrames.topFrames = { {0,72}, {16,72}, {32,72}, {48,72} };
+    componentManager->CreateComponent<MovementAnimationComponent>(playerEntity, std::move(animationFrames), 1.f);
 }
 
 void Test::DestroyPlayer()
