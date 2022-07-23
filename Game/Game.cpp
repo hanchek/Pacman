@@ -19,6 +19,7 @@ void Game::Run()
     GameInit();
 
     Test::CreateAnimatedPlayer();
+    Test::CreateBomb();
     Test::CreateWalls();
     Test::CreateBackGround();
 

@@ -105,6 +105,21 @@ void Test::CreateWall(const sf::Vector2i& tile)
     wallComponent.Init(renderComponent);
 }
 
+void Test::CreateBomb()
+{
+    auto componentManager = EntityComponentManager::GetInstance();
+
+    const EntityID bombEntity = componentManager->CreateEntity();
+    RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(
+        bombEntity, "bomb_animated", sf::IntRect(0, 0, 16, 20));
+    renderComponent.SetPosition({ 350.f, 350.f });
+    renderComponent.SetSize({ 80.f, 100.f });
+    std::vector<sf::Vector2i> animationFrames = { {0,0}, {0,0}, {0,0}, {16,0}, {0,0}, {16,0} };
+    AnimationComponent& animationComponent = componentManager->CreateComponent<AnimationComponent>(
+        bombEntity, std::move(animationFrames), 5.f);
+    animationComponent.SetIsRepeatable(false);
+}
+
 void Test::DrawMissingTexture(sf::RenderWindow& window)
 {
     window.draw(sf::Sprite(ResourceManager::GetInstance()->GetTexture("62")));

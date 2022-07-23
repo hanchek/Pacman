@@ -11,11 +11,25 @@ AnimationComponent::AnimationComponent(std::vector<sf::Vector2i>&& frames, float
 
 void AnimationComponent::Update(float dt, RenderComponent& component)
 {
+    if (myIsPaused)
+    {
+        return;
+    }
+
     myTime += dt;
 
     if (myTime >= myDuration)
     {
-        myTime -= myDuration;
+        if (myIsRepeatable)
+        {
+            myTime -= myDuration;
+        }
+        else
+        {
+            // TODO invoke subscribers to animation end
+            myIsPaused = true;
+            return;
+        }
     }
 
     const int frameIndex = std::trunc(myTime / myDuration * myFramesPositions.size());
