@@ -4,6 +4,7 @@
 #include "RenderComponent.h"
 
 AnimationComponent::AnimationComponent(std::vector<sf::Vector2i>&& frames, float duration)
+    : onAnimationEnd(myAnimationEndSignal)
 {
     myFramesPositions = std::move(frames);
     myDuration = duration;
@@ -18,7 +19,7 @@ void AnimationComponent::Update(float dt, RenderComponent& component)
 
     myTime += dt;
 
-    if (myTime >= myDuration)
+    if (myTime - myDuration > -EPS)
     {
         if (myIsRepeatable)
         {
@@ -26,8 +27,9 @@ void AnimationComponent::Update(float dt, RenderComponent& component)
         }
         else
         {
-            // TODO invoke subscribers to animation end
+            myTime = 0.f;
             myIsPaused = true;
+            myAnimationEndSignal.publish();
             return;
         }
     }
