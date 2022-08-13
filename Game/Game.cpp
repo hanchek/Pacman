@@ -119,6 +119,8 @@ void Game::Update(float dt)
         animationComponent.Update(dt, movementComponent, renderComponent);
     };
     componentManager->ForEachComponent<MovementAnimationComponent, MovementComponent, RenderComponent>(movementAnimationUpdate);
+
+    componentManager->DestroyMarkedEntities();
 }
 
 void Game::Render()

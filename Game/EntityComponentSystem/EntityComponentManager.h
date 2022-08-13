@@ -5,6 +5,7 @@
 #include "Game/Singleton.h"
 
 using EntityID = entt::entity;
+constexpr EntityID NullEntityID = entt::null;
 
 template<typename... ComponentType>
 using ComponentsIterable = entt::basic_view<EntityID, entt::get_t<ComponentType...>, entt::exclude_t<>>;
@@ -16,6 +17,8 @@ public:
 
     EntityID CreateEntity();
     void DestroyEntity(EntityID entityID);
+    void MarkForDestruction(EntityID entityID);
+    void DestroyMarkedEntities();
     bool IsEntityValid(EntityID entityID) const;
 
     template<typename T, typename... Args>
@@ -53,4 +56,5 @@ private:
     ~EntityComponentManager() = default;
 
     entt::registry myRegistry;
+    std::vector<EntityID> myEntitiesToDestroy;
 };
