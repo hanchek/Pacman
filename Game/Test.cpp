@@ -24,6 +24,7 @@ void Test::CreateBackGround()
     RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(backGroundID, "worldBackground");
     renderComponent.SetSize({ MAP_WIDTH * MAP_SCALE, MAP_HEIGHT * MAP_SCALE });
     renderComponent.SetPosition({ MAP_WIDTH * MAP_SCALE / 2.f, MAP_HEIGHT * MAP_SCALE / 2.f });
+    renderComponent.SetRenderOrder(-1);
 }
 
 void Test::CreatePlayer()

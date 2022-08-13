@@ -18,7 +18,7 @@ public:
     EntityID CreateEntity();
     void DestroyEntity(EntityID entityID);
     void MarkForDestruction(EntityID entityID);
-    void DestroyMarkedEntities();
+    bool DestroyMarkedEntities();
     bool IsEntityValid(EntityID entityID) const;
 
     template<typename T, typename... Args>
@@ -49,6 +49,12 @@ public:
     void ForEachComponent(Func func)
     {
         GetComponentsIterable<ComponentType, Others...>().each(func);
+    }
+
+    template<typename ComponentType, typename Compare>
+    void Sort(Compare compare)
+    {
+        myRegistry.sort<ComponentType>(compare);
     }
 
 private:

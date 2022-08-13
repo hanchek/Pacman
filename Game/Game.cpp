@@ -120,7 +120,13 @@ void Game::Update(float dt)
     };
     componentManager->ForEachComponent<MovementAnimationComponent, MovementComponent, RenderComponent>(movementAnimationUpdate);
 
-    componentManager->DestroyMarkedEntities();
+    const bool isAnyEntityDestroyed = componentManager->DestroyMarkedEntities();
+    if (isAnyEntityDestroyed)
+    {
+        componentManager->Sort<RenderComponent>([](const auto& lhs, const auto& rhs) {
+            return lhs.GetRenderOrder() < rhs.GetRenderOrder();
+        });
+    }
 }
 
 void Game::Render()
