@@ -4,13 +4,13 @@
 #include "RenderComponent.h"
 
 AnimationComponent::AnimationComponent(std::vector<sf::Vector2i>&& frames, float duration)
-    : onAnimationEnd(myAnimationEndSignal)
+    : onAnimationEnd(myAnimationEndSignal),
+    myDuration(duration),
+    myFramesPositions(std::move(frames))
 {
-    myFramesPositions = std::move(frames);
-    myDuration = duration;
 }
 
-void AnimationComponent::Update(float dt, RenderComponent& component)
+void AnimationComponent::Update(float dt, RenderComponent& renderComponent)
 {
     if (myIsPaused)
     {
@@ -36,5 +36,5 @@ void AnimationComponent::Update(float dt, RenderComponent& component)
 
     const int frameIndex = std::trunc(myTime / myDuration * myFramesPositions.size());
 
-    component.SetTextureRectPosition(myFramesPositions[frameIndex]);
+    renderComponent.SetTextureRectPosition(myFramesPositions[frameIndex]);
 }

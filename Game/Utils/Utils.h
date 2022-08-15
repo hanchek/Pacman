@@ -44,4 +44,12 @@ namespace Utils
     float Clamp(float& inout, float leftBorder, float rightBorder);
 
     Orientation ToOrientation(const sf::Vector2i& vector);
+
+    template<typename Type>
+    Type Lerp(const Type& start, const Type& end, float t)
+    {
+        return start * (1.f - t) + end * t;
+    }
+
+    sf::Color Lerp(const sf::Color& start, const sf::Color& end, float t);
 }
