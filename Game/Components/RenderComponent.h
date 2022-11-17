@@ -24,6 +24,10 @@ public:
     void SetTextureRectPosition(const sf::Vector2i& position);
     sf::Vector2i GetTextureRectPosition() const;
 
+    void SetRenderOrder(int order) { myRenderOrder = order; }
+    int GetRenderOrder() const { return myRenderOrder; }
+
 private:
     sf::Sprite mySprite;
+    int myRenderOrder = 0;
 };

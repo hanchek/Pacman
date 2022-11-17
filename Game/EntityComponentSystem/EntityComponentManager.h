@@ -5,6 +5,7 @@
 #include "Game/Singleton.h"
 
 using EntityID = entt::entity;
+constexpr EntityID NullEntityID = entt::null;
 
 template<typename... ComponentType>
 using ComponentsIterable = entt::basic_view<EntityID, entt::get_t<ComponentType...>, entt::exclude_t<>>;
@@ -16,6 +17,8 @@ public:
 
     EntityID CreateEntity();
     void DestroyEntity(EntityID entityID);
+    void MarkForDestruction(EntityID entityID);
+    bool DestroyMarkedEntities();
     bool IsEntityValid(EntityID entityID) const;
 
     template<typename T, typename... Args>
@@ -48,9 +51,16 @@ public:
         GetComponentsIterable<ComponentType, Others...>().each(func);
     }
 
+    template<typename ComponentType, typename Compare>
+    void Sort(Compare compare)
+    {
+        myRegistry.sort<ComponentType>(compare);
+    }
+
 private:
     EntityComponentManager() = default;
     ~EntityComponentManager() = default;
 
     entt::registry myRegistry;
+    std::vector<EntityID> myEntitiesToDestroy;
 };
