@@ -4,6 +4,7 @@
 #include "Test.h"
 
 #include "Components/AnimationComponent.h"
+#include "Components/ColorAnimationComponent.h"
 #include "Components/ControlsComponent.h"
 #include "Components/MovementAnimationComponent.h"
 #include "Components/MovementComponent.h"
@@ -113,6 +114,11 @@ void Game::Update(float dt)
         animationComponent.Update(dt, renderComponent);
     };
     componentManager->ForEachComponent<AnimationComponent, RenderComponent>(animationUpdate);
+
+    auto colorAnimationUpdate = [dt](ColorAnimationComponent& colorAnimationComponent, RenderComponent& renderComponent) {
+        colorAnimationComponent.Update(dt, renderComponent);
+    };
+    componentManager->ForEachComponent<ColorAnimationComponent, RenderComponent>(colorAnimationUpdate);
 
     auto movementAnimationUpdate = [dt](MovementAnimationComponent& animationComponent,
         const MovementComponent& movementComponent, RenderComponent& renderComponent) {

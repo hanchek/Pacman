@@ -1,14 +1,12 @@
 #pragma once
 
-#include <vector>
-
 #include <entt/signal/sigh.hpp>
 
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 class RenderComponent;
 
-class AnimationComponent
+class ColorAnimationComponent
 {
 public:
     using AnimCallback = void();
@@ -16,7 +14,7 @@ public:
 
     AnimSink onAnimationEnd;
 
-    AnimationComponent(std::vector<sf::Vector2i>&& frames, float duration);
+    ColorAnimationComponent(const sf::Color& start, const sf::Color& end, float duration);
 
     void SetIsRepeatable(bool isRepeatable) { myIsRepeatable = isRepeatable; }
     bool GetIsRepeatable() const { return myIsRepeatable; }
@@ -24,10 +22,11 @@ public:
     void Update(float dt, RenderComponent& renderComponent);
 
 private:
-    std::vector<sf::Vector2i> myFramesPositions;
+    sf::Color myStartColor;
+    sf::Color myEndColor;
     float myDuration = 0.f;
     float myTime = 0.f;
-    bool myIsRepeatable = true;
+    bool myIsRepeatable = false;
     bool myIsPaused = false;
     entt::sigh<AnimCallback> myAnimationEndSignal;
 };

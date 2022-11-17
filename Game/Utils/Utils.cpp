@@ -81,6 +81,16 @@ namespace Utils
 
         return Orientation::None;
     }
+
+    sf::Color Lerp(const sf::Color& start, const sf::Color& end, float t)
+    {
+        return sf::Color{
+            Lerp(start.r, end.r, t),
+            Lerp(start.g, end.g, t),
+            Lerp(start.b, end.b, t),
+            Lerp(start.a, end.a, t)
+        };
+    }
 }
 
 

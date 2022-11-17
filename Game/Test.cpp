@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Components/AnimationComponent.h"
+#include "Components/ColorAnimationComponent.h"
 #include "Components/ControlsComponent.h"
 #include "Components/EntityDestroyerComponent.h"
 #include "Components/ExplosiveComponent.h"
@@ -129,6 +130,9 @@ void Test::CreateBomb()
     AnimationComponent& animationComponent = componentManager->CreateComponent<AnimationComponent>(
         bombEntity, std::move(animationFrames), 5.f);
     animationComponent.SetIsRepeatable(false);
+    ColorAnimationComponent& colorAnimationComponent = componentManager->CreateComponent<ColorAnimationComponent>(
+        bombEntity, sf::Color::White, sf::Color(255, 255, 255, 0), 2.5f);
+    colorAnimationComponent.SetIsRepeatable(true);
     animationComponent.onAnimationEnd.connect<&ExplosiveComponent::SpawnExplosion>(explosiveComponent);
     animationComponent.onAnimationEnd.connect<&EntityDestroyerComponent::DestroyEntity>(entityDestroyerComponent);
 }
