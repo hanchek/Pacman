@@ -27,6 +27,10 @@ public:
     void SetColor(const sf::Color& color) { mySprite.setColor(color); }
     const sf::Color& GetColor() const { return mySprite.getColor(); }
 
+    void SetRenderOrder(int order) { myRenderOrder = order; }
+    int GetRenderOrder() const { return myRenderOrder; }
+
 private:
     sf::Sprite mySprite;
+    int myRenderOrder = 0;
 };

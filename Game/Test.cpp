@@ -6,6 +6,8 @@
 #include "Components/AnimationComponent.h"
 #include "Components/ColorAnimationComponent.h"
 #include "Components/ControlsComponent.h"
+#include "Components/EntityDestroyerComponent.h"
+#include "Components/ExplosiveComponent.h"
 #include "Components/MovementAnimationComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
@@ -25,6 +27,7 @@ void Test::CreateBackGround()
     RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(backGroundID, "worldBackground");
     renderComponent.SetSize({ MAP_WIDTH * MAP_SCALE, MAP_HEIGHT * MAP_SCALE });
     renderComponent.SetPosition({ MAP_WIDTH * MAP_SCALE / 2.f, MAP_HEIGHT * MAP_SCALE / 2.f });
+    renderComponent.SetRenderOrder(-1);
 }
 
 void Test::CreatePlayer()
@@ -111,10 +114,18 @@ void Test::CreateBomb()
     auto componentManager = EntityComponentManager::GetInstance();
 
     const EntityID bombEntity = componentManager->CreateEntity();
+
     RenderComponent& renderComponent = componentManager->CreateComponent<RenderComponent>(
         bombEntity, "bomb_animated", sf::IntRect(0, 0, 16, 20));
     renderComponent.SetPosition({ 350.f, 350.f });
     renderComponent.SetSize({ 80.f, 100.f });
+
+    ExplosiveComponent& explosiveComponent = componentManager->CreateComponent<ExplosiveComponent>(
+        bombEntity, 1, Utils::GetNearestTile(renderComponent.GetPosition()));
+
+    EntityDestroyerComponent& entityDestroyerComponent = componentManager->CreateComponent<EntityDestroyerComponent>(
+        bombEntity, bombEntity);
+
     std::vector<sf::Vector2i> animationFrames = { {0,0}, {0,0}, {0,0}, {16,0}, {0,0}, {16,0} };
     AnimationComponent& animationComponent = componentManager->CreateComponent<AnimationComponent>(
         bombEntity, std::move(animationFrames), 5.f);
@@ -122,6 +133,8 @@ void Test::CreateBomb()
     ColorAnimationComponent& colorAnimationComponent = componentManager->CreateComponent<ColorAnimationComponent>(
         bombEntity, sf::Color::White, sf::Color(255, 255, 255, 0), 2.5f);
     colorAnimationComponent.SetIsRepeatable(true);
+    animationComponent.onAnimationEnd.connect<&ExplosiveComponent::SpawnExplosion>(explosiveComponent);
+    animationComponent.onAnimationEnd.connect<&EntityDestroyerComponent::DestroyEntity>(entityDestroyerComponent);
 }
 
 void Test::DrawMissingTexture(sf::RenderWindow& window)
