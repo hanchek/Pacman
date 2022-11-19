@@ -1,7 +1,7 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "RenderComponent.h"
 
-#include "Game/ResourceManager/ResourceManager.h"
+#include "ResourceManager/ResourceManager.h"
 
 RenderComponent::RenderComponent(const std::string& textureName)
 {

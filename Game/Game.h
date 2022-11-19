@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "GameConfig.h"
+#include "Engine/GameConfig.h"
 
 class Game
 {

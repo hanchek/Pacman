@@ -1,7 +1,7 @@
-#include "Game\pch.h"
+#include "Game/pch.h"
 #include "StaticWallComponent.h"
 
-#include "RenderComponent.h"
+#include "Engine/Components/RenderComponent.h"
 
 void StaticWallComponent::Init(RenderComponent& renderComponent)
 {

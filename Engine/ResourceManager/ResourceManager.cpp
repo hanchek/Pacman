@@ -1,4 +1,4 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "ResourceManager.h"
 
 const sf::Texture& ResourceManager::GetTexture(const std::string& name)

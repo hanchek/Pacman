@@ -1,17 +1,16 @@
 #include "Game/pch.h"
 #include "Game.h"
 
-#include "Test.h"
+#include "Engine/Components/AnimationPlayerComponent.h"
+#include "Engine/Components/RenderComponent.h"
+#include "Engine/EntityComponentSystem/EntityComponentManager.h"
+#include "Engine/ResourceManager/ResourceManager.h"
+#include "Game/Components/ControlsComponent.h"
+#include "Game/Components/MovementComponent.h"
+#include "Game/Components/StaticWallComponent.h"
+#include "Game/CollisionSystem/CollisionManager.h"
 
-#include "Components/AnimationPlayerComponent.h"
-#include "Components/ControlsComponent.h"
-#include "Components/MovementComponent.h"
-#include "Components/RenderComponent.h"
-#include "Components/StaticWallComponent.h"
-
-#include "CollisionSystem/CollisionManager.h"
-#include "EntityComponentSystem/EntityComponentManager.h"
-#include "ResourceManager/ResourceManager.h"
+#include "Game/Test.h"
 
 void Game::Run()
 {

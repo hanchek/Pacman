@@ -1,8 +1,8 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "AnimationPlayerComponent.h"
 
-#include "Game/Animation/Animation.h"
-#include "Game/ResourceManager/ResourceManager.h"
+#include "Animation/Animation.h"
+#include "ResourceManager/ResourceManager.h"
 
 AnimationPlayerComponent::AnimationPlayerComponent(float duration)
     :onAnimationEnd(myAnimationEndSignal),

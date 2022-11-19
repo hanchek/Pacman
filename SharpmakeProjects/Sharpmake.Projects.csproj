@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="BaseProject.sharpmake.cs" />
     <Compile Include="BomberManSolution.sharpmake.cs" />
+    <Compile Include="Engine.sharpmake.cs" />
     <Compile Include="EnTT.sharpmake.cs" />
     <Compile Include="Game.sharpmake.cs" />
     <Compile Include="Main.sharpmake.cs" />

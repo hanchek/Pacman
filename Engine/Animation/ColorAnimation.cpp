@@ -1,7 +1,7 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "ColorAnimation.h"
 
-#include "Game/Components/RenderComponent.h"
+#include "Components/RenderComponent.h"
 
 ColorAnimation::ColorAnimation(const sf::Color& startColor, const sf::Color& endColor)
     :myStartColor(startColor),
