@@ -55,3 +55,28 @@ void ResourceManager::PreloadTexturesFromFolder(const std::string& relativePath)
         }
     }
 }
+
+const Animation* ResourceManager::GetAnimation(const std::string& name) const
+{
+    const std::size_t nameHash = std::hash<std::string>{}(name);
+    auto it = theAnimations.find(nameHash);
+
+    if (it != theAnimations.end())
+    {
+        return it->second.get();
+    }
+
+    return nullptr;
+}
+
+void ResourceManager::AddAnimation(AnimationPtr&& animation)
+{
+    if (!animation)
+    {
+        return;
+    }
+
+    const std::size_t nameHash = std::hash<std::string>{}(animation->GetName());
+
+    theAnimations.insert(std::make_pair(nameHash, std::move(animation)));
+}

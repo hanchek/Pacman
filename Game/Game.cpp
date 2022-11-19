@@ -4,6 +4,7 @@
 #include "Test.h"
 
 #include "Components/AnimationComponent.h"
+#include "Components/AnimationPlayerComponent.h"
 #include "Components/ColorAnimationComponent.h"
 #include "Components/ControlsComponent.h"
 #include "Components/MovementAnimationComponent.h"
@@ -73,6 +74,8 @@ void Game::GameInit()
     CollisionManager::GetInstance()->UpdateTiles();
     EntityComponentManager::GetInstance()
         ->ForEachComponent<StaticWallComponent, RenderComponent>(&StaticWallComponent::Init);
+
+    Test::CreateAnimations();
 }
 
 void Game::Update(float dt)
@@ -125,6 +128,12 @@ void Game::Update(float dt)
         animationComponent.Update(dt, movementComponent, renderComponent);
     };
     componentManager->ForEachComponent<MovementAnimationComponent, MovementComponent, RenderComponent>(movementAnimationUpdate);
+
+    auto animationPlayerUpdate = [dt](AnimationPlayerComponent& animPlayerComp, RenderComponent& renderComponent)
+    {
+        animPlayerComp.Update(dt, renderComponent);
+    };
+    componentManager->ForEachComponent<AnimationPlayerComponent, RenderComponent>(animationPlayerUpdate);
 
     const bool isAnyEntityDestroyed = componentManager->DestroyMarkedEntities();
     if (isAnyEntityDestroyed)
