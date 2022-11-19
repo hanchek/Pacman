@@ -1,8 +1,9 @@
 #include "Game/pch.h"
 #include "ControlsComponent.h"
 
+#include "Engine/Components/AnimationPlayerComponent.h"
+
 #include "MovementComponent.h"
-#include "AnimationPlayerComponent.h"
 
 void ControlsComponent::Update(MovementComponent& movementComponent, AnimationPlayerComponent& animationPlayer)
 {

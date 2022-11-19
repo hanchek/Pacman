@@ -1,8 +1,8 @@
 #include "Game/pch.h"
 #include "MovementComponent.h"
 
+#include "Engine/Components/RenderComponent.h"
 #include "Game/CollisionSystem/CollisionManager.h"
-#include "RenderComponent.h"
 
 MovementComponent::MovementComponent(float speed) : mySpeed(speed)
 {

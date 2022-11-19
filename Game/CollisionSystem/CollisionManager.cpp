@@ -1,7 +1,7 @@
 #include "Game/pch.h"
 #include "CollisionManager.h"
 
-#include "Game/EntityComponentSystem/EntityComponentManager.h"
+#include "Engine/EntityComponentSystem/EntityComponentManager.h"
 #include "Game/Components/StaticWallComponent.h"
 
 bool CollisionManager::IsTilePassable(const sf::Vector2i& tile)

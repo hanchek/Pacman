@@ -1,22 +1,20 @@
-#include "Game\pch.h"
+#include "Game/pch.h"
 #include "Test.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Animation/ColorAnimation.h"
-#include "Animation/SpriteAnimation.h"
-
-#include "Components/AnimationPlayerComponent.h"
-#include "Components/ControlsComponent.h"
-#include "Components/EntityDestroyerComponent.h"
-#include "Components/ExplosiveComponent.h"
-#include "Components/MovementComponent.h"
-#include "Components/RenderComponent.h"
-#include "Components/StaticWallComponent.h"
-
-#include "CollisionSystem/CollisionManager.h"
-#include "EntityComponentSystem/EntityComponentManager.h"
-#include "ResourceManager/ResourceManager.h"
+#include "Engine/Animation/ColorAnimation.h"
+#include "Engine/Animation/SpriteAnimation.h"
+#include "Engine/Components/AnimationPlayerComponent.h"
+#include "Engine/Components/EntityDestroyerComponent.h"
+#include "Engine/Components/RenderComponent.h"
+#include "Engine/EntityComponentSystem/EntityComponentManager.h"
+#include "Engine/ResourceManager/ResourceManager.h"
+#include "Game/CollisionSystem/CollisionManager.h"
+#include "Game/Components/ControlsComponent.h"
+#include "Game/Components/ExplosiveComponent.h"
+#include "Game/Components/MovementComponent.h"
+#include "Game/Components/StaticWallComponent.h"
 
 static EntityID playerEntity;
 

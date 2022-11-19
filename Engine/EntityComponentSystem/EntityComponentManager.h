@@ -2,7 +2,7 @@
 
 #include <entt/entity/registry.hpp>
 
-#include "Game/Singleton.h"
+#include "Utils/Singleton.h"
 
 using EntityID = entt::entity;
 constexpr EntityID NullEntityID = entt::null;

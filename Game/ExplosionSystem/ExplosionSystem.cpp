@@ -1,11 +1,11 @@
 #include "Game/pch.h"
 #include "ExplosionSystem.h"
 
+#include "Engine/Components/AnimationPlayerComponent.h"
+#include "Engine/Components/EntityDestroyerComponent.h"
+#include "Engine/Components/RenderComponent.h"
+#include "Engine/EntityComponentSystem/EntityComponentManager.h"
 #include "Game/CollisionSystem/CollisionManager.h"
-#include "Game/Components/AnimationPlayerComponent.h"
-#include "Game/Components/EntityDestroyerComponent.h"
-#include "Game/Components/RenderComponent.h"
-#include "Game/EntityComponentSystem/EntityComponentManager.h"
 
 namespace ExplosionSystem
 {

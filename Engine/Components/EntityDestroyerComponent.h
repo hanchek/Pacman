@@ -1,4 +1,6 @@
-#include "Game/EntityComponentSystem/EntityComponentManager.h"
+#pragma once
+
+#include "EntityComponentSystem/EntityComponentManager.h"
 
 class EntityDestroyerComponent
 {

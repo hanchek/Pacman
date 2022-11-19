@@ -1,7 +1,7 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "SpriteAnimation.h"
 
-#include "Game/Components/RenderComponent.h"
+#include "Components/RenderComponent.h"
 
 SpriteAnimation::SpriteAnimation(std::vector<sf::Vector2i>&& framesPositions)
     :myFramesPositions(std::move(framesPositions))

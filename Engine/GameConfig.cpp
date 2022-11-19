@@ -1,4 +1,4 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "GameConfig.h"
 
 void GameConfig::WriteToFile(const std::string& filePath) const

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Game/Singleton.h"
-#include "Game/Utils/Constants.h"
+#include "Engine/Utils/Singleton.h"
+#include "Engine/Utils/Constants.h"
 
 class CollisionManager : public Singleton<CollisionManager>
 {

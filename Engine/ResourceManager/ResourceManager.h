@@ -5,8 +5,8 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "Game/Animation/Animation.h"
-#include "Game/Singleton.h"
+#include "Animation/Animation.h"
+#include "Utils/Singleton.h"
 
 class ResourceManager : public Singleton<ResourceManager>
 {

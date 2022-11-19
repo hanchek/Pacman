@@ -3,15 +3,16 @@
 using Sharpmake;
 
 [module: Sharpmake.Include("BaseProject.sharpmake.cs")]
-[module: Sharpmake.Include("Engine.sharpmake.cs")]
+[module: Sharpmake.Include("SFML.sharpmake.cs")]
+[module: Sharpmake.Include("EnTT.sharpmake.cs")]
 
 [Generate]
-public class Game : BaseProject
+public class Engine : BaseProject
 {
-    public Game() : base()
+    public Engine() : base()
     {
         //The directory that contains the source code that we want include to the project
-        SourceRootPath = Path.Combine(MyOptions.RootPath, "Game");
+        SourceRootPath = Path.Combine(MyOptions.RootPath, "Engine");
 
         AddTargets(MyOptions.GetCommonTarget());
     }
@@ -20,17 +21,19 @@ public class Game : BaseProject
     {
         base.ConfigureAll(conf, target);
 
-        conf.Output = Configuration.OutputType.Exe;
+        conf.Output = Configuration.OutputType.Lib;
 
-        conf.VcxprojUserFile = new Configuration.VcxprojUserFileSettings();
-        conf.VcxprojUserFile.LocalDebuggerWorkingDirectory = MyOptions.RootPath;
+        conf.Options.Add(Sharpmake.Options.Vc.Compiler.CppLanguageStandard.CPP17);
+
+        conf.IncludePaths.Add(SourceRootPath);
 
         // For inherited properties such as include paths and library paths,
         // Sharpmake provides the option to choose between public and private dependencies.
         // Private dependencies are not propagated to dependent projects
-        conf.AddPublicDependency<Engine>(target);
+        conf.AddPublicDependency<SFML>(target);
+        conf.AddPublicDependency<EnTT>(target);
 
-        conf.PrecompHeader = "Game/pch.h";
-        conf.PrecompSource = "Game/pch.cpp";
+        conf.PrecompHeader = "pch.h";
+        conf.PrecompSource = "pch.cpp";
     }
 }

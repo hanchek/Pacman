@@ -1,16 +1,3 @@
 #pragma once
 
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-#include <filesystem>
-#include <memory>
-#include <string>
-#include <unordered_map>
-#include <windows.h>
-
-#include <SFML/Graphics.hpp>
-
-#include "GameConfig.h"
-#include "Utils/Constants.h"
-#include "Utils/Utils.h"
+#include "Engine/pch.h"

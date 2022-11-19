@@ -1,4 +1,4 @@
-#include "Game/pch.h"
+#include "pch.h"
 #include "EntityComponentManager.h"
 
 EntityID EntityComponentManager::CreateEntity()
