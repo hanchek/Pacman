@@ -3,10 +3,8 @@
 
 #include "Test.h"
 
-#include "Components/AnimationComponent.h"
-#include "Components/ColorAnimationComponent.h"
+#include "Components/AnimationPlayerComponent.h"
 #include "Components/ControlsComponent.h"
-#include "Components/MovementAnimationComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/RenderComponent.h"
 #include "Components/StaticWallComponent.h"
@@ -73,6 +71,8 @@ void Game::GameInit()
     CollisionManager::GetInstance()->UpdateTiles();
     EntityComponentManager::GetInstance()
         ->ForEachComponent<StaticWallComponent, RenderComponent>(&StaticWallComponent::Init);
+
+    Test::CreateAnimations();
 }
 
 void Game::Update(float dt)
@@ -103,28 +103,18 @@ void Game::Update(float dt)
 
     auto componentManager = EntityComponentManager::GetInstance();
 
-    componentManager->ForEachComponent<ControlsComponent, MovementComponent>(&ControlsComponent::Update);
+    componentManager->ForEachComponent<ControlsComponent, MovementComponent, AnimationPlayerComponent>(&ControlsComponent::Update);
 
     auto movementUpdate = [dt](MovementComponent& movementComponent, RenderComponent& renderComponent) {
         movementComponent.Update(dt, renderComponent);
     };
     componentManager->ForEachComponent<MovementComponent, RenderComponent>(movementUpdate);
 
-    auto animationUpdate = [dt](AnimationComponent& animationComponent, RenderComponent& renderComponent) {
-        animationComponent.Update(dt, renderComponent);
+    auto animationPlayerUpdate = [dt](AnimationPlayerComponent& animPlayerComp, RenderComponent& renderComponent)
+    {
+        animPlayerComp.Update(dt, renderComponent);
     };
-    componentManager->ForEachComponent<AnimationComponent, RenderComponent>(animationUpdate);
-
-    auto colorAnimationUpdate = [dt](ColorAnimationComponent& colorAnimationComponent, RenderComponent& renderComponent) {
-        colorAnimationComponent.Update(dt, renderComponent);
-    };
-    componentManager->ForEachComponent<ColorAnimationComponent, RenderComponent>(colorAnimationUpdate);
-
-    auto movementAnimationUpdate = [dt](MovementAnimationComponent& animationComponent,
-        const MovementComponent& movementComponent, RenderComponent& renderComponent) {
-        animationComponent.Update(dt, movementComponent, renderComponent);
-    };
-    componentManager->ForEachComponent<MovementAnimationComponent, MovementComponent, RenderComponent>(movementAnimationUpdate);
+    componentManager->ForEachComponent<AnimationPlayerComponent, RenderComponent>(animationPlayerUpdate);
 
     const bool isAnyEntityDestroyed = componentManager->DestroyMarkedEntities();
     if (isAnyEntityDestroyed)

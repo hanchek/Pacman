@@ -9,6 +9,8 @@ namespace sf
 
 namespace Test
 {
+    void CreateAnimations();
+
     void CreateBackGround();
     void CreatePlayer();
     void CreateAnimatedPlayer();
