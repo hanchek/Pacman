@@ -2,7 +2,7 @@
 #include "ExplosionSystem.h"
 
 #include "Game/CollisionSystem/CollisionManager.h"
-#include "Game/Components/AnimationComponent.h"
+#include "Game/Components/AnimationPlayerComponent.h"
 #include "Game/Components/EntityDestroyerComponent.h"
 #include "Game/Components/RenderComponent.h"
 #include "Game/EntityComponentSystem/EntityComponentManager.h"
@@ -92,12 +92,12 @@ namespace ExplosionSystem
             EntityDestroyerComponent& destroyerComponent = ecs->CreateComponent<EntityDestroyerComponent>(
                 explosionEntity, explosionEntity);
 
-            std::vector<sf::Vector2i> frames = { {0, 0}, {48, 0}, {96, 0}, {144, 0}, {192, 0}, {240, 0}, {288, 0} };
             const float duration = 0.5;
-            AnimationComponent& animationComponent = ecs->CreateComponent<AnimationComponent>(
-                explosionEntity, std::move(frames), duration);
-            animationComponent.SetIsRepeatable(false);
-            animationComponent.onAnimationEnd.connect<&EntityDestroyerComponent::DestroyEntity>(destroyerComponent);
+
+            AnimationPlayerComponent& animationPlayer = ecs->CreateComponent<AnimationPlayerComponent>(
+                explosionEntity, duration, "explosion");
+            animationPlayer.SetIsRepeatable(false);
+            animationPlayer.onAnimationEnd.connect<&EntityDestroyerComponent::DestroyEntity>(destroyerComponent);
 
             // TODO perform damage calculation
         }

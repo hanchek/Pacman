@@ -28,6 +28,7 @@ public:
     bool GetIsRepeatable() const { return myIsRepeatable; }
 
     void SetAnimation(const Animation* animation) { myAnimation = animation; }
+    void SetAnimation(const std::string& animationName);
 
 private:
     bool myIsPaused = false;

@@ -14,7 +14,7 @@ AnimationPlayerComponent::AnimationPlayerComponent(float duration, const std::st
     : onAnimationEnd(myAnimationEndSignal),
     myDuration(duration)
 {
-    myAnimation = ResourceManager::GetInstance()->GetAnimation(animationName);
+    SetAnimation(animationName);
 }
 
 void AnimationPlayerComponent::Update(float dt, RenderComponent& renderComponent)
@@ -42,4 +42,9 @@ void AnimationPlayerComponent::Update(float dt, RenderComponent& renderComponent
     }
 
     myAnimation->ApplyAnimation(myTime / myDuration, renderComponent);
+}
+
+void AnimationPlayerComponent::SetAnimation(const std::string& animationName)
+{
+    myAnimation = ResourceManager::GetInstance()->GetAnimation(animationName);
 }
