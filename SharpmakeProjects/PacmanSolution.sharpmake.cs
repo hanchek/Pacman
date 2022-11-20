@@ -5,11 +5,11 @@
 
 // Represents the solution that will be generated
 [Generate]
-public class BomberManSolution : Solution
+public class PacmanSolution : Solution
 {
-    public BomberManSolution()
+    public PacmanSolution()
     {
-        Name = "BomberMan";
+        Name = "Pacman";
 
         AddTargets(MyOptions.GetCommonTarget());
     }

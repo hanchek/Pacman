@@ -5,10 +5,6 @@
 #include "Engine/Components/RenderComponent.h"
 #include "Engine/EntityComponentSystem/EntityComponentManager.h"
 #include "Engine/ResourceManager/ResourceManager.h"
-#include "Game/Components/ControlsComponent.h"
-#include "Game/Components/MovementComponent.h"
-#include "Game/Components/StaticWallComponent.h"
-#include "Game/CollisionSystem/CollisionManager.h"
 
 #include "Game/Test.h"
 
@@ -16,9 +12,6 @@ void Game::Run()
 {
     GameInit();
 
-    Test::CreateAnimatedPlayer();
-    Test::CreateBomb();
-    Test::CreateWalls();
     Test::CreateBackGround();
 
     sf::Clock clock;
@@ -30,8 +23,6 @@ void Game::Run()
         Render();
     }
 
-    Test::DestroyPlayer();
-
     GameRelease();
 }
 
@@ -39,7 +30,6 @@ void Game::GameInit()
 {
     ResourceManager::CreateInstance();
     EntityComponentManager::CreateInstance();
-    CollisionManager::CreateInstance();
 
     myGameConfig.ReadFromFile(SETTINGS_FILE_PATH);
 
@@ -66,12 +56,6 @@ void Game::GameInit()
     myGameConfig.windowView = myWindow.getDefaultView();
     myGameConfig.gameWorldView.setViewport(myGameConfig.gameWorldViewPort);
     myGameConfig.UpdateGameWorldView(myWindow.getSize());
-
-    CollisionManager::GetInstance()->UpdateTiles();
-    EntityComponentManager::GetInstance()
-        ->ForEachComponent<StaticWallComponent, RenderComponent>(&StaticWallComponent::Init);
-
-    Test::CreateAnimations();
 }
 
 void Game::Update(float dt)
@@ -101,13 +85,6 @@ void Game::Update(float dt)
     }
 
     auto componentManager = EntityComponentManager::GetInstance();
-
-    componentManager->ForEachComponent<ControlsComponent, MovementComponent, AnimationPlayerComponent>(&ControlsComponent::Update);
-
-    auto movementUpdate = [dt](MovementComponent& movementComponent, RenderComponent& renderComponent) {
-        movementComponent.Update(dt, renderComponent);
-    };
-    componentManager->ForEachComponent<MovementComponent, RenderComponent>(movementUpdate);
 
     auto animationPlayerUpdate = [dt](AnimationPlayerComponent& animPlayerComp, RenderComponent& renderComponent)
     {
@@ -150,7 +127,6 @@ void Game::Render()
 
 void Game::GameRelease()
 {
-    CollisionManager::DestroyInstance();
     EntityComponentManager::DestroyInstance();
     ResourceManager::DestroyInstance();
 }
