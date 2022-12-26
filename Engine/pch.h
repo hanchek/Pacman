@@ -9,6 +9,8 @@
 #include <unordered_map>
 #include <windows.h>
 
+#include <json.hpp>
+
 #include <SFML/Graphics.hpp>
 
 #include "GameConfig.h"

@@ -33,6 +33,8 @@ public class Engine : BaseProject
         conf.AddPublicDependency<SFML>(target);
         conf.AddPublicDependency<EnTT>(target);
 
+        conf.IncludePaths.Add(Path.Combine(MyOptions.ExternPath, "nlohmann-json"));
+
         conf.PrecompHeader = "pch.h";
         conf.PrecompSource = "pch.cpp";
     }
