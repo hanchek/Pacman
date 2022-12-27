@@ -5,6 +5,7 @@ using Sharpmake;
 [module: Sharpmake.Include("BaseProject.sharpmake.cs")]
 [module: Sharpmake.Include("SFML.sharpmake.cs")]
 [module: Sharpmake.Include("EnTT.sharpmake.cs")]
+[module: Sharpmake.Include("ImGui-SFML.sharpmake.cs")]
 
 [Generate]
 public class Engine : BaseProject
@@ -32,6 +33,7 @@ public class Engine : BaseProject
         // Private dependencies are not propagated to dependent projects
         conf.AddPublicDependency<SFML>(target);
         conf.AddPublicDependency<EnTT>(target);
+        conf.AddPublicDependency<ImGui_SFML>(target);
 
         conf.IncludePaths.Add(Path.Combine(MyOptions.ExternPath, "nlohmann-json"));
 

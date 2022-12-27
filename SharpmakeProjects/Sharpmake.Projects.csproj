@@ -34,6 +34,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseProject.sharpmake.cs" />
+    <Compile Include="ImGui-SFML.sharpmake.cs" />
+    <Compile Include="ImGui.Sharpmake.cs" />
     <Compile Include="PacmanSolution.sharpmake.cs" />
     <Compile Include="Engine.sharpmake.cs" />
     <Compile Include="EnTT.sharpmake.cs" />

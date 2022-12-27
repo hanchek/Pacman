@@ -5,6 +5,7 @@
 
 # Solution file since it is generated with Sharpmake
 *.sln
+imgui.ini
 
 # User-specific files
 *.rsuser
