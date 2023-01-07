@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cmath>
 #include <filesystem>
+#include <fstream>
 #include <memory>
 #include <string>
 #include <unordered_map>
